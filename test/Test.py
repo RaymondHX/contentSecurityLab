@@ -1,9 +1,20 @@
-import pcap
-# list all of the Internet devices
-devs = pcap.findalldevs()
-print(*devs, sep='\n')
-pc = pcap.pcap(devs[3], promisc=True, immediate=True, timeout_ms=50)
-# fiter http pcakets
-pc.setfilter('tcp port 80')
-for ptime, pdata in pc:
-    print(ptime, pdata)
+
+from scapy.all import *
+
+from bt_capture.Capture import Capture
+
+
+def test():
+    def hello(x):
+        print(x.show())
+        print(x[0].show())
+        print(type(x))
+        print(type(x.type))
+
+    package = sniff(count=1, prn=lambda x: hello(x), promisc=True)  # 扫描eth0网卡的数据包，总数为10个
+def test_capture():
+    c = Capture()
+    c.capture()
+
+if __name__ == '__main__':
+    test_capture()
