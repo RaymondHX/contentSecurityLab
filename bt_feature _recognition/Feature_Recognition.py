@@ -17,7 +17,12 @@ class Feature_Recognition:
             peer_message协议
         :return:
         '''
-        pass
+        sub_rec = [self.tcp_peer_handshake_rec,
+                   self.tcp_peer_message_rec]
+        pkt_bytes = bytes(payload)
+        for rec in sub_rec:
+            if rec(pkt_bytes, packet_info) is True:
+                return
 
     def udp_recognition(self, payload, packet_info):
         '''
@@ -93,11 +98,24 @@ class Feature_Recognition:
         return False
 
 
-    def tcp_peer_handshake_rec(self):
-        pass
+    def tcp_peer_handshake_rec(self,payload,packet_info):
+        try:
+            protocol_name = sub_bytes(payload, 0, 1)
+        except:
+            return
+        if protocol_name[0] == 0x13:
+            self.proto_restore.peer_handshake(payload, packet_info)
+            return True
 
-    def tcp_peer_message_rec(self):
-        pass
+    def tcp_peer_message_rec(self, payload, packet_info):
+        if len(payload) < 5:
+            return False
+        type = sub_bytes(payload, 4, 1)
+        if (type[0] == 0x00 or type[0] == 0x01 or type[0] == 0x02 or type[0] == 0x03) and len(payload) == 5:
+             self.proto_restore.peer_message(payload, packet_info)
+             return True
+        if type[0] == 0x04 or type[0] == 0x05 or type[0] == 0x06 or type[0] == 0x07:
+            self.proto_restore.peer_message(payload, packet_info)
 
 
 
