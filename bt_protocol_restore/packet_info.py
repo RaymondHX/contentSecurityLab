@@ -1,6 +1,6 @@
 class Inet_Info:
     '''
-    记录在和所在包的信息，包括
+    记录载荷所在包的信息，包括
     源ip, 目的ip, 源端口, 目的端口, 以及有效载荷长度
     '''
     def __init__(self, sip, dip, sport, dport, pld_len):
