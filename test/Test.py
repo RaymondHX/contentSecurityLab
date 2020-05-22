@@ -1,20 +1,11 @@
-
-from scapy.all import *
-
-from bt_capture.Capture import Capture
+#coding:utf-8
 
 
-def test():
-    def hello(x):
-        print(x.show())
 
-        print(x.type)
+# from scapy.all import *
+# def packet_callbacke(packet):
+#     print (packet.show())
+#
+# sniff(prn=packet_callbacke, count=100)
 
-    package = sniff(count=1, prn=lambda x: hello(x), promisc=True)  # 扫描eth0网卡的数据包，总数为10个
-def test_capture():
-    c = Capture()
-    c.capture()
 
-if __name__ == '__main__':
-    test_capture()
-    # test()
