@@ -1,4 +1,3 @@
-
 from scapy.all import *
 
 from bt_capture.Capture import Capture

@@ -1,6 +1,8 @@
 from bt_protocol_restore.convert import *
 from bt_protocol_restore.protocols.Udp_Tracker_Request import *
 from bt_protocol_restore.protocols.Udp_Tracker_Response import *
+from bt_protocol_restore.protocols.Peer_Handshake import *
+from bt_protocol_restore.protocols.Peer_Message import *
 
 
 class Protocol_Restore:
@@ -116,9 +118,19 @@ class Protocol_Restore:
         print(proto_pkt)
 
 
-    def peer_handshake(self):
-        pass
+    def peer_handshake(self, payload, packet_info):
+        protocol_name = 0x13
+        protocol_str = str(sub_bytes(payload, 1, 19))
+        reserve = sub_bytes(payload, 20, 8)
+        sha1_hash = str(sub_bytes(payload, 28, 20))
+        peer_id = str(sub_bytes(payload, 48, 20))
+        proto_pkt = Peer_Handshake(sha1_hash, peer_id,packet_info)
+        print(proto_pkt)
 
-    def peer_message(self):
-        pass
+    def peer_message(self, payload, packet_info):
+        length = ntohi(sub_bytes(payload, 0, 4))
+        type = sub_bytes(payload, 4, 1)
+        data = sub_bytes(payload, 5, len(payload)-5)
+        proto_pkt = Peer_Message(length, type, data, packet_info)
+        print(proto_pkt)
 

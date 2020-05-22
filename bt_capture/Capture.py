@@ -25,7 +25,7 @@ class Capture:
                     packet_info = Inet_Info(n_pkt.src, n_pkt.dst, t_pkt.sport, t_pkt.dport, len(t_pkt.payload))
                     # 进行TCP包的特征识别
                     if not isinstance(t_pkt.payload, NoPayload):
-                        self.rec.tcp_recognition(t_pkt[1], packet_info)
+                        self.rec.tcp_recognition(t_pkt.payload, packet_info)
                 # 处理udp数据包
                 elif n_pkt.proto == 0x11:
                     # 获得应用层UDP数据包
