@@ -9,8 +9,7 @@ class Feature_Recognition:
     def __init__(self):
         self.proto_restore = Protocol_Restore()
 
-
-    def tcp_recognition(self, payload):
+    def tcp_recognition(self, payload, packet_info):
         '''
         对tcp数据包进行特征识别
         目前只包括
@@ -20,7 +19,7 @@ class Feature_Recognition:
         '''
         pass
 
-    def udp_recognition(self, payload):
+    def udp_recognition(self, payload, packet_info):
         '''
         对udp数据包进行特征识别
         目前只包括
@@ -36,7 +35,7 @@ class Feature_Recognition:
 
         pkt_bytes = bytes(payload)
         for rec in sub_rec:
-            if rec(pkt_bytes) is True:
+            if rec(pkt_bytes, packet_info) is True:
                 return
 
 
@@ -49,7 +48,7 @@ class Feature_Recognition:
         pass
 
 
-    def udp_tracker_request_rec(self, payload):
+    def udp_tracker_request_rec(self, payload, packet_info):
         try:
             action_n = sub_bytes(payload, 8, 4)
         except:
@@ -57,20 +56,19 @@ class Feature_Recognition:
         action = ntohi(action_n)
         # connect request
         if len(payload) == 16 and action == 0:
-            self.proto_restore.udp_tracker_connect_request(payload)
+            self.proto_restore.udp_tracker_connect_request(payload, packet_info)
             return True
         # announce request
         elif len(payload) >= 98 and action == 1:
-            self.proto_restore.udp_tracker_announce_request(payload)
+            self.proto_restore.udp_tracker_announce_request(payload, packet_info)
             return True
         # scrape request
         elif (len(payload)-16) % 20 == 0 and action == 2:
-            self.proto_restore.udp_tracker_scrape__request(payload)
+            self.proto_restore.udp_tracker_scrape__request(payload, packet_info)
             return True
         return False
 
-
-    def udp_tracker_response_rec(self, payload):
+    def udp_tracker_response_rec(self, payload, packet_info):
         try:
             action_n = sub_bytes(payload, 0, 4)
         except:
@@ -78,19 +76,19 @@ class Feature_Recognition:
         action = ntohi(action_n)
         # connect response
         if len(payload) == 16 and action == 0:
-            self.proto_restore.udp_tracker_connect_response(payload)
+            self.proto_restore.udp_tracker_connect_response(payload, packet_info)
             return True
         # announce response
         elif (len(payload)-20) % 6 == 0 and action == 1:
-            self.proto_restore.udp_tracker_announce_response(payload)
+            self.proto_restore.udp_tracker_announce_response(payload, packet_info)
             return True
         #  scrape response
         elif (len(payload) - 8) % 12 == 0 and action == 2:
-            self.proto_restore.udp_tracker_scrape__response(payload)
+            self.proto_restore.udp_tracker_scrape__response(payload, packet_info)
             return True
         # error response
         elif len(payload) > 8 and action == 3:
-            self.proto_restore.udp_tracker_error_response(payload)
+            self.proto_restore.udp_tracker_error_response(payload, packet_info)
             return True
         return False
 
