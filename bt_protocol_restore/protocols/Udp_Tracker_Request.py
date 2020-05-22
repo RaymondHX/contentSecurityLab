@@ -61,7 +61,7 @@ class Udp_Tracker_Request:
                     key:%s\n
                     num want:%s\n
                     port:%s\n''' %(self.protocol_id, self.action, self.transaction_id, self.info_hash, self.peer_id,
-                                   self.downloaded, self.left, self.uploaded, self.event, self.ip_addr, self.key, self.num_want, self.peer_id)
+                                   self.downloaded, self.left, self.uploaded, self.event, self.ip_addr, self.key, self.num_want, self.port)
         return show_str
 
 

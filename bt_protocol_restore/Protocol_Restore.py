@@ -44,7 +44,7 @@ class Protocol_Restore:
         num_want = ntohi(num_want_n)
         port = ntohs(port_n)
         proto_pkt = Udp_Tracker_Request(conn_id, action, tran_id, info_hash_n, peer_id_n, downloaded,
-                                        left, uploaded, event, ip_addr, key, num_want, peer_id_n)
+                                        left, uploaded, event, ip_addr, key, num_want, port)
         print(proto_pkt)
 
 
@@ -63,6 +63,7 @@ class Protocol_Restore:
             offset += 20
 
         proto_pkt =  Udp_Tracker_Request(conn_id, action, tran_id, info_hash_list)
+        print(proto_pkt)
 
     def udp_tracker_connect_response(self, payload):
         tran_id_n = sub_bytes(payload, 4, 4)
@@ -115,7 +116,8 @@ class Protocol_Restore:
         tran_id = ntohi(tran_id_n)
         error = str(error_n)
 
-        proto_pkt = Udp_Tracker_scrape_response(tran_id, error)
+        proto_pkt = Udp_Tracker_Error_response(tran_id, error)
+        print(proto_pkt)
 
 
     def peer_handshake(self):

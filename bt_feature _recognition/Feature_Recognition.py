@@ -36,7 +36,7 @@ class Feature_Recognition:
 
         pkt_bytes = bytes(payload)
         for rec in sub_rec:
-            if rec() is True:
+            if rec(pkt_bytes) is True:
                 return
 
 
@@ -50,14 +50,17 @@ class Feature_Recognition:
 
 
     def udp_tracker_request_rec(self, payload):
-        action_n = sub_bytes(payload, 8, 4)
+        try:
+            action_n = sub_bytes(payload, 8, 4)
+        except:
+            return
         action = ntohi(action_n)
         # connect request
         if len(payload) == 16 and action == 0:
             self.proto_restore.udp_tracker_connect_request(payload)
             return True
         # announce request
-        elif len(payload) == 98 and action == 1:
+        elif len(payload) >= 98 and action == 1:
             self.proto_restore.udp_tracker_announce_request(payload)
             return True
         # scrape request
@@ -68,7 +71,10 @@ class Feature_Recognition:
 
 
     def udp_tracker_response_rec(self, payload):
-        action_n = sub_bytes(payload, 0, 4)
+        try:
+            action_n = sub_bytes(payload, 0, 4)
+        except:
+            return
         action = ntohi(action_n)
         # connect response
         if len(payload) == 16 and action == 0:
@@ -79,11 +85,11 @@ class Feature_Recognition:
             self.proto_restore.udp_tracker_announce_response(payload)
             return True
         #  scrape response
-        elif (len(payload) - 8) % 12 == 0 and action == 1:
+        elif (len(payload) - 8) % 12 == 0 and action == 2:
             self.proto_restore.udp_tracker_scrape__response(payload)
             return True
         # error response
-        elif len(payload) > 8 and action == 1:
+        elif len(payload) > 8 and action == 3:
             self.proto_restore.udp_tracker_error_response(payload)
             return True
         return False

@@ -68,7 +68,7 @@ class Udp_Tracker_scrape_response:
                     leechers:%s\n''' % (self.action, self.transaction_id, self.seeders, self.completed, self.leechers)
         return show_str
 
-class udp_tracker_error_response:
+class Udp_Tracker_Error_response:
     '''
     表示UDP tracker error response protocol
     | action | transaction_id | error message |
@@ -84,4 +84,5 @@ class udp_tracker_error_response:
                     action:%s\n
                     transaction_id:%s\n
                     error_msg:%s\n''' % (self.action, self.transaction_id, self.error_msg)
+        return show_str
 

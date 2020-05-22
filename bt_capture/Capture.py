@@ -1,10 +1,6 @@
 
 from scapy.all import *
-
-
-
 from Feature_Recognition import Feature_Recognition
-
 
 class Capture:
 
@@ -26,8 +22,6 @@ class Capture:
                     # 进行TCP包的特征识别
                     if not isinstance(t_pkt.payload, NoPayload):
                         self.rec.tcp_recognition(t_pkt[1])
-                        print(type(t_pkt[1]))
-                        print(str(t_pkt[1]))
                 # 处理udp数据包
                 elif n_pkt.proto == 0x11:
                     # 获得应用层UDP数据包
@@ -35,8 +29,7 @@ class Capture:
                     # 进行UDP包的特征识别
                     if not isinstance(t_pkt.payload, NoPayload):
                         self.rec.udp_recognition(t_pkt.payload)
-                        t_pkt.show()
-        package = sniff(count=0, prn=lambda x: packet_handler(x), promisc=True)
+        package = sniff(count=0, prn=lambda x: packet_handler(x), promisc=True)#, filter='ip host 185.181.60.67')
 
 
 
