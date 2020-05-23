@@ -41,3 +41,15 @@ def ntohq(buffer):
     '''
     result = struct.unpack('!q', buffer)
     return result[0]
+
+def int2ip(addr):
+    '''
+    把32位的int整数转换为点分十进制字符串形式的ip地址
+    :param self:
+    :param addr:
+    :return:
+    '''
+    ip = str(addr & 0xff)
+    for i in range(1, 4):
+        ip += '.' + str((addr >> 8 * i) & 0xff)
+    return ip

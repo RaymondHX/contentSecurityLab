@@ -15,8 +15,3 @@ class Inet_Info:
                    % (self.sip, self.sport, self.dip, self.dport, self.pld_len)
         return show_str
 
-    # def int2ip(self, addr):
-    #     ip = str(addr & 0xff)
-    #     for i in range(1, 4):
-    #         ip += '.' + (addr >> 8 * i) & 0xff
-    #     return ip

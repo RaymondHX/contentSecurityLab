@@ -97,13 +97,12 @@ class Feature_Recognition:
             return True
         return False
 
-
-    def tcp_peer_handshake_rec(self,payload,packet_info):
+    def tcp_peer_handshake_rec(self, payload, packet_info):
         try:
             protocol_name = sub_bytes(payload, 0, 1)
         except:
             return
-        if protocol_name[0] == 0x13:
+        if protocol_name[0] == 0x13 and len(payload) == 68:
             self.proto_restore.peer_handshake(payload, packet_info)
             return True
 

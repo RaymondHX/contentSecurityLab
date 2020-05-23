@@ -57,7 +57,7 @@ class Protocol_Restore:
         tran_id = ntohi(tran_id_n)
         info_hash_list = []
         offset = 16
-        while len(payload) == offset:
+        while len(payload) > offset:
             info_hash_n = sub_bytes(payload, offset, 20)
             info_hash = str(info_hash_n)
             offset += 20
@@ -83,15 +83,15 @@ class Protocol_Restore:
         leechers = ntohi(leechers_n)
         seeders = ntohi(seeders_n)
 
-        off = 20
+        offset = 20
         ip_port_list = []
-        while len(payload) == off:
-            ip_addr_n = sub_bytes(payload, off, 4)
-            tcp_port_n = sub_bytes(payload, off+4, 2)
-            ip_addr = ntohi(ip_addr_n)
+        while len(payload) > offset:
+            ip_addr_n = sub_bytes(payload, offset, 4)
+            tcp_port_n = sub_bytes(payload, offset+4, 2)
+            ip_addr = int2ip(ntohi(ip_addr_n))
             tcp_port = ntohs(tcp_port_n)
             ip_port_list.append((ip_addr, tcp_port))
-            off += 6
+            offset += 6
         proto_pkt = Udp_Tracker_Announce_response(packet_info, tran_id, interval, leechers, seeders, ip_port_list)
         print(proto_pkt)
 
