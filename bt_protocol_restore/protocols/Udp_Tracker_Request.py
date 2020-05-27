@@ -94,9 +94,9 @@ class Udp_Tracker_Scrape_Request:
     '''
     用来表示UDP tracker protocol scrape request协议
 
-    +---------------+--------+----------------+-----------+
-    | connection_id | action | transaction_id | info_hash |
-    +---------------+--------+----------------+-----------+
+    +---------------+--------+----------------+------------+
+    | connection_id | action | transaction_id | info_hash+ |
+    +---------------+--------+----------------+------------+
          8(int)       4(int)      4(int)         20(str)
     '''
     def __init__(self, packet_info, protocol_id, action, transaction_id,

@@ -7,6 +7,9 @@ from bt_protocol_restore.protocols.Peer_Message import *
 
 class Protocol_Restore:
 
+    def __init__(self):
+        statistic = Statistic()
+
     def udp_tracker_connect_request(self, payload, packet_info):
         conn_id_n = sub_bytes(payload, 0, 8)
         action = 0
@@ -15,6 +18,7 @@ class Protocol_Restore:
         conn_id = ntohq(conn_id_n)
         tran_id = ntohi(tran_id_n)
         proto_pkt = Udp_Tracker_Connect_Request(packet_info, conn_id, action, tran_id)
+        statistic.add_tracker_pkt(proto_pkt, type='request')
         print(proto_pkt)
 
     def udp_tracker_announce_request(self, payload, packet_info):
@@ -46,6 +50,7 @@ class Protocol_Restore:
         port = ntohs(port_n)
         proto_pkt = Udp_Tracker_Announce_Request(packet_info, conn_id, action, tran_id, info_hash, peer_id, downloaded,
                                         left, uploaded, event, ip_addr, key, num_want, port)
+        statistic.add_tracker_pkt(proto_pkt, type='request')
         print(proto_pkt)
 
     def udp_tracker_scrape__request(self, payload, packet_info):
@@ -63,6 +68,7 @@ class Protocol_Restore:
             offset += 20
 
         proto_pkt =  Udp_Tracker_Scrape_Request(packet_info, conn_id, action, tran_id, info_hash_list)
+        statistic.add_tracker_pkt(proto_pkt, type='request')
         print(proto_pkt)
 
     def udp_tracker_connect_response(self, payload, packet_info):
@@ -71,6 +77,7 @@ class Protocol_Restore:
         tran_id = ntohi(tran_id_n)
         conn_id = ntohq(conn_id_n)
         proto_pkt = Udp_Tracker_Connect_response(packet_info, tran_id, conn_id)
+        statistic.add_tracker_pkt(proto_pkt, type='response')
         print(proto_pkt)
 
     def udp_tracker_announce_response(self, payload, packet_info):
@@ -93,6 +100,7 @@ class Protocol_Restore:
             ip_port_list.append((ip_addr, tcp_port))
             offset += 6
         proto_pkt = Udp_Tracker_Announce_response(packet_info, tran_id, interval, leechers, seeders, ip_port_list)
+        statistic.add_tracker_pkt(proto_pkt, type='response')
         print(proto_pkt)
 
     def udp_tracker_scrape__response(self, payload, packet_info):
@@ -105,6 +113,7 @@ class Protocol_Restore:
         completed = ntohi(completed_n)
         leechers = ntohi(leechers_n)
         proto_pkt = Udp_Tracker_scrape_response(packet_info, tran_id, seeders, completed, leechers)
+        statistic.add_tracker_pkt(proto_pkt, type='response')
         print(proto_pkt)
 
     def udp_tracker_error_response(self, payload, packet_info):
@@ -115,8 +124,8 @@ class Protocol_Restore:
         error = str(error_n)
 
         proto_pkt = Udp_Tracker_Error_response(packet_info, tran_id, error)
+        statistic.add_tracker_pkt(proto_pkt, type='response')
         print(proto_pkt)
-
 
     def peer_handshake(self, payload, packet_info):
         protocol_name = 0x13
@@ -125,6 +134,7 @@ class Protocol_Restore:
         sha1_hash = str(sub_bytes(payload, 28, 20))
         peer_id = str(sub_bytes(payload, 48, 20))
         proto_pkt = Peer_Handshake(sha1_hash, peer_id,packet_info)
+        statistic.add_peer_pkt(proto_pkt)
         print(proto_pkt)
 
     def peer_message(self, payload, packet_info):
@@ -132,5 +142,6 @@ class Protocol_Restore:
         type = sub_bytes(payload, 4, 1)
         data = sub_bytes(payload, 5, len(payload)-5)
         proto_pkt = Peer_Message(length, type, data, packet_info)
+        statistic.add_peer_pkt(proto_pkt)
         print(proto_pkt)
 

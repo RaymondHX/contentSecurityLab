@@ -23,7 +23,7 @@ class Statistic:
             stat = Tracker_Info(ip, port)
             self.tracker_stat[ip] = stat
         if type == 'response':
-            if  pkt.action == 0:
+            if pkt.action == 0:
                 pass
             elif pkt.action == 1:
                 seeders = pkt.seeders
