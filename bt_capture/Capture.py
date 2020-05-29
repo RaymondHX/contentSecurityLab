@@ -23,6 +23,7 @@ class Capture:
                     t_pkt = pkt[2] # n_pkt[1]
                     # 获得该包的ip地址，port以及载荷长度(tcp载荷长度)
                     packet_info = Inet_Info(n_pkt.src, n_pkt.dst, t_pkt.sport, t_pkt.dport, len(t_pkt.payload))
+
                     # 进行TCP包的特征识别
                     if not isinstance(t_pkt.payload, NoPayload):
                         self.rec.tcp_recognition(t_pkt.payload, packet_info)

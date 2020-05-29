@@ -69,6 +69,13 @@ def test_int2ip():
         if int2ip(ip) != ip_str:
             raise Exception()
 
+def byets2ints(bytes):
+    string = []
+    for byte in bytes:
+        string.append(str(byte))
+    result = "".join(string)
+    return result
+
 if __name__ == '__main__':
     test_int2ip()
 

@@ -3,12 +3,16 @@ from bt_protocol_restore.protocols.Udp_Tracker_Request import *
 from bt_protocol_restore.protocols.Udp_Tracker_Response import *
 from bt_protocol_restore.protocols.Peer_Handshake import *
 from bt_protocol_restore.protocols.Peer_Message import *
-
+from bt_statistic.statistic import *
+from database import *
+from bt_protocol_restore.convert import *
+import datetime
 
 class Protocol_Restore:
 
     def __init__(self):
-        statistic = Statistic()
+        self.statistic = Statistic()
+        self.connect = Mysql_Connect("root", "sl488234", "bt_data")
 
     def udp_tracker_connect_request(self, payload, packet_info):
         conn_id_n = sub_bytes(payload, 0, 8)
@@ -18,8 +22,9 @@ class Protocol_Restore:
         conn_id = ntohq(conn_id_n)
         tran_id = ntohi(tran_id_n)
         proto_pkt = Udp_Tracker_Connect_Request(packet_info, conn_id, action, tran_id)
-        statistic.add_tracker_pkt(proto_pkt, type='request')
+        # statistic.add_tracker_pkt(proto_pkt, type='request')
         print(proto_pkt)
+
 
     def udp_tracker_announce_request(self, payload, packet_info):
         conn_id_n = sub_bytes(payload, 0, 8)
@@ -50,7 +55,7 @@ class Protocol_Restore:
         port = ntohs(port_n)
         proto_pkt = Udp_Tracker_Announce_Request(packet_info, conn_id, action, tran_id, info_hash, peer_id, downloaded,
                                         left, uploaded, event, ip_addr, key, num_want, port)
-        statistic.add_tracker_pkt(proto_pkt, type='request')
+        self.statistic.add_tracker_pkt(proto_pkt, type='request')
         print(proto_pkt)
 
     def udp_tracker_scrape__request(self, payload, packet_info):
@@ -68,7 +73,7 @@ class Protocol_Restore:
             offset += 20
 
         proto_pkt =  Udp_Tracker_Scrape_Request(packet_info, conn_id, action, tran_id, info_hash_list)
-        statistic.add_tracker_pkt(proto_pkt, type='request')
+        self.statistic.add_tracker_pkt(proto_pkt, type='request')
         print(proto_pkt)
 
     def udp_tracker_connect_response(self, payload, packet_info):
@@ -77,7 +82,7 @@ class Protocol_Restore:
         tran_id = ntohi(tran_id_n)
         conn_id = ntohq(conn_id_n)
         proto_pkt = Udp_Tracker_Connect_response(packet_info, tran_id, conn_id)
-        statistic.add_tracker_pkt(proto_pkt, type='response')
+        self.statistic.add_tracker_pkt(proto_pkt, type='response')
         print(proto_pkt)
 
     def udp_tracker_announce_response(self, payload, packet_info):
@@ -100,7 +105,7 @@ class Protocol_Restore:
             ip_port_list.append((ip_addr, tcp_port))
             offset += 6
         proto_pkt = Udp_Tracker_Announce_response(packet_info, tran_id, interval, leechers, seeders, ip_port_list)
-        statistic.add_tracker_pkt(proto_pkt, type='response')
+        self.statistic.add_tracker_pkt(proto_pkt, type='response')
         print(proto_pkt)
 
     def udp_tracker_scrape__response(self, payload, packet_info):
@@ -113,7 +118,13 @@ class Protocol_Restore:
         completed = ntohi(completed_n)
         leechers = ntohi(leechers_n)
         proto_pkt = Udp_Tracker_scrape_response(packet_info, tran_id, seeders, completed, leechers)
-        statistic.add_tracker_pkt(proto_pkt, type='response')
+        self.statistic.add_tracker_pkt(proto_pkt, type='response')
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
+        sql = "insert into udp_tracker_scrape_response_protocol (action, transaction_id, seeders, completed, leechers, time, src_ip, src_port, dst_ip, dst_port) values "\
+              +"(2, "+proto_pkt.transaction_id+", "+proto_pkt.seeders+", "+proto_pkt.completed+", "+proto_pkt.leechers+", "+now+"', '"+str(packet_info.sip)+"', '"+str(packet_info.sport)+"', '"+str(packet_info.dip)+"', '"+str(packet_info.dport)+"')"
+        print(sql)
+        self.connect(sql)
         print(proto_pkt)
 
     def udp_tracker_error_response(self, payload, packet_info):
@@ -124,24 +135,42 @@ class Protocol_Restore:
         error = str(error_n)
 
         proto_pkt = Udp_Tracker_Error_response(packet_info, tran_id, error)
-        statistic.add_tracker_pkt(proto_pkt, type='response')
+        self.statistic.add_tracker_pkt(proto_pkt, type='response')
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
+        sql = "insert into udp_tracker_error_response_protocol (action, transaction_id,error_message, time, src_ip, src_port, dst_ip, dst_port) values "\
+              +"(3, "+proto_pkt.transaction_id+", '"+proto_pkt.error_msg+"', '"+now+"', '"+str(packet_info.sip)+"', '"+str(packet_info.sport)+"', '"+str(packet_info.dip)+"', '"+str(packet_info.dport)+"')"
+        print(sql)
+        self.connect(sql)
         print(proto_pkt)
 
     def peer_handshake(self, payload, packet_info):
         protocol_name = 0x13
         protocol_str = str(sub_bytes(payload, 1, 19))
         reserve = sub_bytes(payload, 20, 8)
-        sha1_hash = str(sub_bytes(payload, 28, 20))
-        peer_id = str(sub_bytes(payload, 48, 20))
+        sha1_hash = byets2ints(sub_bytes(payload, 28, 20))
+        peer_id = byets2ints(sub_bytes(payload, 48, 20))
         proto_pkt = Peer_Handshake(sha1_hash, peer_id,packet_info)
-        statistic.add_peer_pkt(proto_pkt)
+        # self.statistic.add_peer_pkt(proto_pkt)
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
+        sql = "insert into peer_handshake (proto, handshake_str, sha1_hash, peer_id, time, src_ip, src_port, dst_ip, dst_port) values (19, '"+proto_pkt.handshake_str\
+              +"', '"+proto_pkt.sha1_hash+"', '"+peer_id+"', '"+now+"', '"+str(packet_info.sip)+"', '"+str(packet_info.sport)+"', '"+str(packet_info.dip)+"', '"+str(packet_info.dport)+"')"
+        print(sql)
+        self.connect.insert(sql)
         print(proto_pkt)
 
     def peer_message(self, payload, packet_info):
         length = ntohi(sub_bytes(payload, 0, 4))
-        type = sub_bytes(payload, 4, 1)
+        type = byets2ints(sub_bytes(payload, 4, 1))
         data = sub_bytes(payload, 5, len(payload)-5)
         proto_pkt = Peer_Message(length, type, data, packet_info)
-        statistic.add_peer_pkt(proto_pkt)
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
+        sql = "insert into peer_message (length, type,  time, src_ip, src_port, dst_ip, dst_port) values ("+str(proto_pkt.length)+", "+proto_pkt.type+\
+              ", '"+now+"', '"+str(packet_info.sip)+"', '"+str(packet_info.sport)+"', '"+str(packet_info.dip)+"', '"+str(packet_info.dport)+"')"
+        print(sql)
+        self.connect.insert(sql)
+        self.statistic.add_peer_pkt(proto_pkt)
         print(proto_pkt)
 

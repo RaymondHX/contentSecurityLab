@@ -6,7 +6,7 @@ import pymysql
 
 class Mysql_Connect(object):
     #数据库连接
-    def __init__(self, host, user, passwd, db):
+    def __init__(self, user, passwd, db):
         try:
             self.db = pymysql.connect(
                 host="101.37.19.14",
@@ -29,9 +29,11 @@ class Mysql_Connect(object):
             # 提交到数据库执行
             self.db.commit()
             return True
-        except:
+        except Exception as e:
+            print(e)
             # 如果发生错误则回滚
             self.db.rollback()
+
             return False
 
     #查

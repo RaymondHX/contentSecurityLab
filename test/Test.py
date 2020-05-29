@@ -9,7 +9,7 @@ def test():
 
         print(x.type)
 
-    package = sniff(count=1, prn=lambda x: hello(x), promisc=True)  # 扫描eth0网卡的数据包，总数为10个
+    package = sniff(count=100, prn=lambda x: hello(x), promisc=True)  # 扫描eth0网卡的数据包，总数为10个
 def test_capture():
     c = Capture()
     c.capture()
