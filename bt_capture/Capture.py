@@ -8,8 +8,12 @@ class Capture:
 
     def __init__(self):
         self.rec = Feature_Recognition()
+        self.stop_flag = False
 
     def capture(self):
+        def stop_handler(pkt):
+            return self.stop_flag
+
         def packet_handler(pkt):
             # 仅处理IPv4数据包
             if pkt.type == 0x0800:
@@ -36,8 +40,12 @@ class Capture:
                     # 进行UDP包的特征识别
                     if not isinstance(t_pkt.payload, NoPayload):
                         self.rec.udp_recognition(t_pkt.payload, packet_info)
-        package = sniff(count=0, prn=lambda x: packet_handler(x), promisc=False)#, filter='ip host 185.181.60.67')
+
+        self.stop_flag = False
+        package = sniff(count=0, prn=lambda x: packet_handler(x), promisc=False, stop_filter = lambda x:stop_handler(x))#, filter='ip host 185.181.60.67')
 
 
+    def stop_capture(self):
+        self.stop_flag = True
 
 

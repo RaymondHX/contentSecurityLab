@@ -1,7 +1,12 @@
 from bt_protocol_restore.protocols.Peer_Handshake import *
-class Statistic:
+from PyQt5.QtCore import pyqtSignal, QObject
+
+class Statistic(QObject):
+    # 定义一个信号，信号有两个字符串类型的参数，信号名称为dataChanged
+    data_changed = pyqtSignal(str, str, name='dataChanged')
 
     def __init__(self):
+        super().__init__()
         # ip : tracker
         self.iip = '192.168.1.9'
         self.tracker_stat = {}
@@ -11,6 +16,9 @@ class Statistic:
 
     def add_tracker_pkt(self, pkt, type):
         self.tracker_pkt_cnt += 1
+
+        # 发送信号
+        self.dataChanged.emit("old status", "new status")
         pkt_info = pkt.packet_info
         if type == 'response':
             ip = pkt_info.sip

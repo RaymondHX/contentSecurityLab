@@ -32,7 +32,7 @@ def ntohi(buffer):
     :param buffer: 网络字节顺序
     :return:
     '''
-    result = struct.unpack('i', buffer)
+    result = struct.unpack('!i', buffer)
     return result[0]
 
 
@@ -76,7 +76,15 @@ def byets2ints(bytes):
     result = "".join(string)
     return result
 
+def test_ntohi():
+    bytes_test = bytes([0x0, 0x0, 0x0, 0x4])
+    print(bytes_test)
+    r = ntohi(bytes_test)
+    if r != 4:
+        print(r)
+        raise Exception()
 if __name__ == '__main__':
-    test_int2ip()
+    # test_int2ip()
+    test_ntohi()
 
 
