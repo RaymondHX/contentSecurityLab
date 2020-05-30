@@ -25,6 +25,16 @@ def ntohs(buffer):
     result = struct.unpack('!h', buffer)
     return result[0]
 
+def ntohus(buffer):
+    '''
+    将buffer中的网络字节顺序的值转换为主机字节顺序表示的16位无符号整数
+    :param buffer: 网络字节顺序
+    :return:
+    '''
+    result = struct.unpack('!H', buffer)
+    return result[0]
+
+
 
 def ntohi(buffer):
     '''
@@ -83,6 +93,7 @@ def test_ntohi():
     if r != 4:
         print(r)
         raise Exception()
+
 if __name__ == '__main__':
     # test_int2ip()
     test_ntohi()
