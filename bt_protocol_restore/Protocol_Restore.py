@@ -194,7 +194,7 @@ class Protocol_Restore:
         protocol_str = str(sub_bytes(payload, 1, 19))
         reserve = sub_bytes(payload, 20, 8)
         sha1_hash = byets2ints(sub_bytes(payload, 28, 20))
-        peer_id = byets2ints(sub_bytes(payload, 48, 20))
+        peer_id = str(sub_bytes(payload, 48, 8), 'ascii')
         proto_pkt = Peer_Handshake(sha1_hash, peer_id,packet_info)
         # self.statistic.add_peer_pkt(proto_pkt)
         now = datetime.datetime.now()

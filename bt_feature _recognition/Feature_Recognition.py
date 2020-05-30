@@ -115,6 +115,7 @@ class Feature_Recognition:
              return True
         if type[0] == 0x04 or type[0] == 0x05 or type[0] == 0x06 or type[0] == 0x07:
             self.proto_restore.peer_message(payload, packet_info)
+            return True
 
 
 

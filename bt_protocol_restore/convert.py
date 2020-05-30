@@ -32,7 +32,7 @@ def ntohi(buffer):
     :param buffer: 网络字节顺序
     :return:
     '''
-    result = struct.unpack('!i', buffer)
+    result = struct.unpack('i', buffer)
     return result[0]
 
 
