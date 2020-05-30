@@ -113,8 +113,35 @@ class Feature_Recognition:
         if (type[0] == 0x00 or type[0] == 0x01 or type[0] == 0x02 or type[0] == 0x03) and len(payload) == 5:
              self.proto_restore.peer_message(payload, packet_info)
              return True
-        if type[0] == 0x04 or type[0] == 0x05 or type[0] == 0x06 or type[0] == 0x07:
-            self.proto_restore.peer_message(payload, packet_info)
+        if type[0] == 0x04 or type[0] == 0x05 or type[0] == 0x06 or type[0] == 0x07 or type[0] == 0x14 :
+            length = ntohi(sub_bytes(payload, 0, 4))
+            flag = False
+            if length <len(payload):
+                current_bt = 0
+                while True:
+                    templength = length
+                    if current_bt+4+length==len(payload):
+                        flag = True
+                        break
+                    if current_bt+4+length >len(payload):
+                        return False
+                    length = ntohi(sub_bytes(payload, current_bt+4+length, 4))
+                    current_bt = 4+templength
+
+            current_bt = 0
+            length = ntohi(sub_bytes(payload, 0, 4))
+            if flag:
+                while True:
+                    if current_bt+4+length == len(payload):
+                        flag = True
+                        break
+                    self.proto_restore.peer_message(sub_bytes(payload, current_bt, length+4), packet_info)
+                    templength = length
+                    length = ntohi(sub_bytes(payload, current_bt + 4 + length, 4))
+                    current_bt = 4 + templength
+            length = ntohi(sub_bytes(payload, 0, 4))
+            if length == len(payload)-4:
+                self.proto_restore.peer_message(payload, packet_info)
             return True
 
 

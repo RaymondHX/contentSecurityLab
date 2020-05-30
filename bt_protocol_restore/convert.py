@@ -25,6 +25,16 @@ def ntohs(buffer):
     result = struct.unpack('!h', buffer)
     return result[0]
 
+def ntohus(buffer):
+    '''
+    将buffer中的网络字节顺序的值转换为主机字节顺序表示的16位无符号整数
+    :param buffer: 网络字节顺序
+    :return:
+    '''
+    result = struct.unpack('!H', buffer)
+    return result[0]
+
+
 
 def ntohi(buffer):
     '''
@@ -32,7 +42,7 @@ def ntohi(buffer):
     :param buffer: 网络字节顺序
     :return:
     '''
-    result = struct.unpack('i', buffer)
+    result = struct.unpack('!i', buffer)
     return result[0]
 
 
@@ -75,6 +85,7 @@ def byets2ints(bytes):
         string.append(str(byte))
     result = "".join(string)
     return result
+
 
 if __name__ == '__main__':
     test_int2ip()
