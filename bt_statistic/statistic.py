@@ -1,29 +1,34 @@
 from bt_protocol_restore.protocols.Peer_Handshake import *
 from PyQt5.QtCore import pyqtSignal, QObject
+import time
 
-class Statistic(QObject):
+class Statistic():
     # 定义一个信号，信号有两个字符串类型的参数，信号名称为dataChanged
-    data_changed = pyqtSignal(str, str, name='dataChanged')
+    # data_changed = pyqtSignal(str, str, name='dataChanged')
 
     def __init__(self):
         super().__init__()
         # ip : tracker
-        self.iip = '192.168.1.9'
+        self.iip = '192.168.2.101'
         self.tracker_stat = {}
         self.peer_stat = {}
-        self.tracker_pkt_cnt = 0
-        self.peer_pkt_cnt = 0
+        self.tracker_req_pkt_cnt = 0
+        self.tracker_res_pkt_cnt = 0
+        self.peer_msg_pkt_cnt = 0
+        self.peer_hs_pkt_cnt = 0
+        self.peer_upload_time = {}
+        self.peer_download_time = {}
 
     def add_tracker_pkt(self, pkt, type):
-        self.tracker_pkt_cnt += 1
-
-        # 发送信号
-        self.dataChanged.emit("old status", "new status")
+        # # 发送信号
+        # self.dataChanged.emit("old status", "new status")
         pkt_info = pkt.packet_info
         if type == 'response':
+            self.tracker_res_pkt_cnt+=1
             ip = pkt_info.sip
             port = pkt_info.sport
         else:
+            self.tracker_req_pkt_cnt+=1
             ip = pkt_info.dip
             port = pkt_info.dport
         if ip in self.tracker_stat.keys():
@@ -52,7 +57,8 @@ class Statistic(QObject):
                 pass
 
     def add_peer_pkt(self, pkt):
-        self.peer_pkt_cnt += 1
+        ticks = time.time()
+        print(ticks)
         pkt_info = pkt.packet_info
         if pkt_info.sip == self.iip:
             ip = pkt_info.dip
@@ -65,11 +71,41 @@ class Statistic(QObject):
         else:
             stat = Peer_Info(ip, port)
             self.peer_stat[ip] = stat
+
+
         # 统计握手协议
-        if isinstance(stat, Peer_Handshake):
-            pass
+        if isinstance(pkt, Peer_Handshake):
+            self.peer_hs_pkt_cnt+=1
         else:
-            pass
+            self.peer_msg_pkt_cnt+=1
+            last_time = 0
+            speed = self.peer_stat[ip].upload_speed
+            # 上传
+            if self.iip == pkt_info.sip:
+                if ip in self.peer_upload_time.keys():
+                    last_time = self.peer_upload_time[ip]
+            # 下载
+            else:
+                if ip in self.peer_download_time.keys():
+                    last_time = self.peer_download_time[ip]
+            # 计算速度
+            if ticks - last_time ==0:
+                pass
+            else:
+                speed = round(pkt_info.pld_len / (ticks - last_time), 2)
+            # 上传
+            if self.iip == pkt_info.sip:
+                self.peer_upload_time[ip] = ticks
+                self.peer_stat[ip].upload_speed = speed
+            # 下载
+            else:
+                self.peer_download_time[ip] = ticks
+                self.peer_stat[ip].download_speed = speed
+
+
+
+
+
 
 
 class Tracker_Info:
@@ -91,20 +127,25 @@ class Tracker_Info:
 
     def __str__(self):
         pass
+    def get_info_list(self):
+        return [self.ip, self.port, self.state, self.seeders, self.users]
 
 
 class Peer_Info:
 
     def __init__(self, ip, port):
-        self.ip = 0
-        self.port = 0
-        self.client = 0
+        self.ip = ip
+        self.port = port
+        self.client = "BitTorrent"
         self.download_speed = 0
         self.upload_speed = 0
         self.downloaded = 0
 
     def __str__(self):
         pass
+
+    def get_info_list(self):
+        return [self.ip, self.port, self.client, self.download_speed, self.upload_speed, self.downloaded]
 
 
 

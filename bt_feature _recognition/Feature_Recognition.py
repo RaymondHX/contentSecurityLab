@@ -114,36 +114,23 @@ class Feature_Recognition:
              self.proto_restore.peer_message(payload, packet_info)
              return True
         if type[0] == 0x04 or type[0] == 0x05 or type[0] == 0x06 or type[0] == 0x07 or type[0] == 0x14 :
-            length = ntohi(sub_bytes(payload, 0, 4))
-            flag = False
-            if length <len(payload):
-                current_bt = 0
-                while True:
-                    templength = length
-                    if current_bt+4+length==len(payload):
-                        flag = True
-                        break
-                    if current_bt+4+length >len(payload):
-                        return False
-                    length = ntohi(sub_bytes(payload, current_bt+4+length, 4))
-                    current_bt = 4+templength
+            cur_bt_offset = 0
+            while True:
+                if len(payload) - cur_bt_offset == 0:
+                    break
+                if len(payload) - cur_bt_offset < 5:
+                    return False
+                length = ntohi(sub_bytes(payload, cur_bt_offset, 4))
+                cur_bt_offset = cur_bt_offset + length + 4
 
-            current_bt = 0
-            length = ntohi(sub_bytes(payload, 0, 4))
-            if flag:
-                while True:
-                    if current_bt+4+length == len(payload):
-                        flag = True
-                        break
-                    self.proto_restore.peer_message(sub_bytes(payload, current_bt, length+4), packet_info)
-                    templength = length
-                    length = ntohi(sub_bytes(payload, current_bt + 4 + length, 4))
-                    current_bt = 4 + templength
-            length = ntohi(sub_bytes(payload, 0, 4))
-            if length == len(payload)-4:
-                self.proto_restore.peer_message(payload, packet_info)
+            cur_bt_offset = 0
+            while True:
+                if len(payload) - cur_bt_offset == 0:
+                    break
+                length = ntohi(sub_bytes(payload, cur_bt_offset, 4))
+                self.proto_restore.peer_message(sub_bytes(payload, cur_bt_offset, length + 4), packet_info)
+                cur_bt_offset = cur_bt_offset + length + 4
             return True
-
 
 
 

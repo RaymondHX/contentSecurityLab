@@ -42,7 +42,7 @@ class Capture:
                         self.rec.udp_recognition(t_pkt.payload, packet_info)
 
         self.stop_flag = False
-        package = sniff(count=0, prn=lambda x: packet_handler(x), promisc=False, stop_filter = lambda x:stop_handler(x))#, filter='ip host 185.181.60.67')
+        package = sniff(count=1000, prn=lambda x: packet_handler(x), promisc=False, stop_filter = lambda x:stop_handler(x))#, filter='ip host 185.181.60.67')
 
 
     def stop_capture(self):

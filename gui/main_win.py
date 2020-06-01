@@ -2,6 +2,7 @@ import sys
 from bt_capture.Capture import Capture
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from gui.mainwindow import Ui_MainWindow
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -36,8 +37,8 @@ class MainWindow(QMainWindow):
         self.ui.show_peers_info_b.clicked.connect(self.show_peers_info)
 
         # self.data_statistic.signal.connect(event)
-        # 以下代码仅是个例子
-        self.data_statistics.dataChanged.connect(self.data_changed)
+        # # 以下代码仅是个例子
+        # self.data_statistics.dataChanged.connect(self.data_changed)
 
 
     def start_capture(self):
@@ -47,6 +48,10 @@ class MainWindow(QMainWindow):
         '''
         self.data_capture.capture()
         print('start capturing!')
+        self.ui.lineEdit.setText(str(self.data_statistics.tracker_req_pkt_cnt))
+        self.ui.lineEdit_2.setText(str(self.data_statistics.tracker_res_pkt_cnt))
+        self.ui.lineEdit_3.setText(str(self.data_statistics.peer_hs_pkt_cnt))
+        self.ui.lineEdit_4.setText(str(self.data_statistics.peer_msg_pkt_cnt))
 
     def show_tracker_info(self):
         '''
@@ -54,6 +59,14 @@ class MainWindow(QMainWindow):
         :return:
         '''
         print('show tracker info!')
+        _translate = QtCore.QCoreApplication.translate
+        print(self.data_statistics.tracker_stat)
+        for row, stat in zip(range(len(self.data_statistics.tracker_stat.values())), self.data_statistics.tracker_stat.values()):
+            for column, i in zip(range(5), stat.get_info_list()):
+                item = QtWidgets.QTableWidgetItem()
+                self.ui.tableWidget.setItem(row, column, item)
+                item = self.ui.tableWidget.item(row, column)
+                item.setText(_translate("MainWindow", str(i)))
 
     def show_peers_info(self):
         '''
@@ -61,10 +74,20 @@ class MainWindow(QMainWindow):
         :return:
         '''
         print('show peers info1')
+        _translate = QtCore.QCoreApplication.translate
+        print(self.data_statistics.peer_stat)
+        for row, stat in zip(range(len(self.data_statistics.peer_stat.values())),
+                             self.data_statistics.peer_stat.values()):
+            for column, i in zip(range(6), stat.get_info_list()):
+                item = QtWidgets.QTableWidgetItem()
+                self.ui.tableWidget_2.setItem(row, column, item)
+                item = self.ui.tableWidget_2.item(row, column)
+                item.setText(_translate("MainWindow", str(i)))
         pass
 
     def data_changed(self):
         pass
+
 
 
 
