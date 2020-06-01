@@ -107,7 +107,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="tracker_req_line"/>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_2">
@@ -117,7 +117,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="tracker_res_line"/>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_3">
@@ -127,7 +127,7 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLineEdit" name="lineEdit_3"/>
+        <widget class="QLineEdit" name="peer_hs_line"/>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_4">
@@ -137,7 +137,7 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="lineEdit_4"/>
+        <widget class="QLineEdit" name="peer_msg_line"/>
        </item>
       </layout>
      </item>
@@ -147,7 +147,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>80</y>
+      <y>130</y>
       <width>93</width>
       <height>28</height>
      </rect>

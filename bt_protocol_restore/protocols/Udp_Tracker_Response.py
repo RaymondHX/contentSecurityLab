@@ -52,7 +52,7 @@ class Udp_Tracker_Announce_response:
     def __str__(self):
         show_str = '''trakcer announce response protocol:\n%s
         \t action:%s
-        \t ransaction_id:%s
+        \t transaction_id:%s
         \t interval:%s
         \t leechers:%s
         \t seeders:%s\n''' % (self.packet_info, self.action, self.transaction_id, self.interval, self.leechers, self.seeders)

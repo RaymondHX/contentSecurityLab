@@ -12,10 +12,10 @@ class Peer_Handshake:
 
     def __str__(self):
         show_str = '''peer handshake protocol:\n%s
-                \t protocol_id:%s
-                \t handshake_str:%s
-                \t sha1_hash:%s
-                \t peer_id:%s
-                ''' % (
+        \t protocol_id:%s
+        \t handshake_str:%s
+        \t sha1_hash:%s
+        \t peer_id:%s
+        ''' % (
         self.packet_info, self.proto, self.handshake_str, self.sha1_hash, self.peer_id)
         return show_str

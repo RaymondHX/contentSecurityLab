@@ -37,7 +37,11 @@ class MainWindow(QMainWindow):
 
         # self.data_statistic.signal.connect(event)
         # 以下代码仅是个例子
-        self.data_statistics.dataChanged.connect(self.data_changed)
+        #
+        # self.data_statistics.tracker_pkt_cnt_changed.connect(self.change_track_pkt_cnt)
+        #
+        # self.data_statistics.peer_pkt_cnt_changed.connect(self.change_peer_pkt_cnt)
+        #self.data_statistics.peer_pkt_cnt_changed
 
 
     def start_capture(self):
@@ -45,8 +49,13 @@ class MainWindow(QMainWindow):
         当点击开始捕包按钮时进行捕包
         :return:
         '''
-        self.data_capture.capture()
         print('start capturing!')
+        self.data_capture.capture()
+        self.ui.tracker_req_line.setText(str(self.data_statistics.tracker_req_pkt_cnt))
+        self.ui.tracker_res_line.setText(str(self.data_statistics.tracker_res_pkt_cnt))
+        # self.ui.peer_hs_line.setText(str(self.data_statistics.peer_hs_pkt_cnt))
+        # self.ui.peer_msg_line.setText(str(self.data_statistics.peer_msg_pkt_cnt))
+
 
     def show_tracker_info(self):
         '''
@@ -63,8 +72,17 @@ class MainWindow(QMainWindow):
         print('show peers info1')
         pass
 
-    def data_changed(self):
-        pass
+    # def change_track_pkt_cnt(self, req_cnt, res_cnt):
+    #     print(req_cnt)
+    #     self.ui.tracker_req_line.setText(str(req_cnt))
+    #     self.ui.tracker_res_line.setText(str(res_cnt))
+    #
+    # def change_peer_pkt_cnt(self, hs_cnt, msg_cnt):
+    #     print(hs_cnt)
+    #     self.ui.peer_hs_line.setText(str(hs_cnt))
+    #     self.ui.peer_msg_line.setText(str(msg_cnt))
+
+
 
 
 

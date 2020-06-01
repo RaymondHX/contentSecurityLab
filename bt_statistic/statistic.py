@@ -1,31 +1,43 @@
 from bt_protocol_restore.protocols.Peer_Handshake import *
 from PyQt5.QtCore import pyqtSignal, QObject
 
-class Statistic(QObject):
-    # 定义一个信号，信号有两个字符串类型的参数，信号名称为dataChanged
-    data_changed = pyqtSignal(str, str, name='dataChanged')
+class Statistic:
+    # 定义信号
+    # 第1个int表示requst包的数量，第2个int表示response包的数量
+    # tracker_pkt_cnt_changed = pyqtSignal(int, int)
+
+    # 第1个int表示handshake包的数量，第2个int表示message包的数量
+    # peer_pkt_cnt_changed = pyqtSignal(int, int)
 
     def __init__(self):
-        super().__init__()
+        # super().__init__()
         # ip : tracker
         self.iip = '192.168.1.9'
         self.tracker_stat = {}
         self.peer_stat = {}
-        self.tracker_pkt_cnt = 0
-        self.peer_pkt_cnt = 0
+        self.tracker_res_pkt_cnt = 0
+        self.tracker_req_pkt_cnt = 0
+        self.peer_hs_pkt_cnt = 0
+        self.peer_msg_pkt_cnt = 0
+
 
     def add_tracker_pkt(self, pkt, type):
-        self.tracker_pkt_cnt += 1
 
-        # 发送信号
-        self.dataChanged.emit("old status", "new status")
         pkt_info = pkt.packet_info
         if type == 'response':
+            self.tracker_res_pkt_cnt += 1
+            # 发送信号
+            # self.tracker_pkt_cnt_changed.emit(self.tracker_req_pkt_cnt, self.tracker_res_pkt_cnt)
             ip = pkt_info.sip
             port = pkt_info.sport
         else:
+            self.tracker_req_pkt_cnt += 1
+            # 发送信号
+            # self.tracker_pkt_cnt_changed.emit(self.tracker_req_pkt_cnt, self.tracker_res_pkt_cnt)
+
             ip = pkt_info.dip
             port = pkt_info.dport
+
         if ip in self.tracker_stat.keys():
             stat = self.tracker_stat[ip]
         else:
@@ -54,6 +66,9 @@ class Statistic(QObject):
     def add_peer_pkt(self, pkt):
         self.peer_pkt_cnt += 1
         pkt_info = pkt.packet_info
+
+        if ticks - last_time == 0:
+            speed = last_speed
         if pkt_info.sip == self.iip:
             ip = pkt_info.dip
             port = pkt_info.dport
@@ -66,10 +81,17 @@ class Statistic(QObject):
             stat = Peer_Info(ip, port)
             self.peer_stat[ip] = stat
         # 统计握手协议
-        if isinstance(stat, Peer_Handshake):
-            pass
+        if isinstance(pkt, Peer_Handshake):
+            self.peer_hs_pkt_cnt += 1
+            # 发送信号
+            # print('in add_peer_pkt method')
+            # self.peer_pkt_cnt_changed.emit(self.peer_hs_pkt_cnt, self.peer_msg_pkt_cnt)
+
         else:
-            pass
+            self.peer_msg_pkt_cnt += 1
+            # 发送信号
+            # self.peer_pkt_cnt_changed.emit(self.peer_hs_pkt_cnt, self.peer_msg_pkt_cnt)
+
 
 
 class Tracker_Info:

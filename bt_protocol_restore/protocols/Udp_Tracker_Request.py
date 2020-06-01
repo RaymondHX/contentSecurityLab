@@ -52,7 +52,7 @@ class Udp_Tracker_Announce_Request:
                  num_want,
                  port):
         self.packet_info = packet_info
-        self.protocol_id = protocol_id
+        self.connection_id = protocol_id
         self.action = action
         self.transaction_id = transaction_id
         self.info_hash = info_hash
@@ -74,7 +74,7 @@ class Udp_Tracker_Announce_Request:
 
     def __str__(self):
         show_str = '''tracker announce request protocol:\n%s
-        \t protocol_id:%s
+        \t connection_id:%s
         \t action:%s
         \t transaction_id:%s
         \t info_hash:%s
@@ -86,7 +86,7 @@ class Udp_Tracker_Announce_Request:
         \t ip address:%s
         \t key:%s
         \t num want:%s
-        \t port:%s\n''' %(self.packet_info, self.protocol_id, self.action, self.transaction_id, self.info_hash, self.peer_id,
+        \t port:%s\n''' %(self.packet_info, self.connection_id, self.action, self.transaction_id, self.info_hash, self.peer_id,
                                    self.downloaded, self.left, self.uploaded, self.event, self.ip_addr, self.key, self.num_want, self.port)
         return show_str
 
@@ -102,7 +102,7 @@ class Udp_Tracker_Scrape_Request:
     def __init__(self, packet_info, protocol_id, action, transaction_id,
                  info_hash_list):
         self.packet_info = packet_info
-        self.protocol_id = protocol_id
+        self.connection_id = protocol_id
         self.action = action
         self.transaction_id = transaction_id
         self.info_hash_list = info_hash_list
@@ -115,9 +115,9 @@ class Udp_Tracker_Scrape_Request:
 
     def __str__(self):
         show_str = '''tracker scrape request protocol:\n%s
-        \t protocol_id:%s
+        \t connection_id:%s
         \t action:%s
-        \t transaction_id:%s\n''' % (self.packet_info, self.protocol_id, self.action, self.transaction_id)
+        \t transaction_id:%s\n''' % (self.packet_info, self.connection_id, self.action, self.transaction_id)
         for info_hash in self.info_hash_list:
             show_str += '''
             \t info_hash%s\n''' % (info_hash)

@@ -11,9 +11,9 @@ class Peer_Message:
 
     def __str__(self):
         show_str = '''peer message protocol:\n%s
-                        \t length:%s
-                        \t type:%s
-                        \t data:%s
-                        ''' % (
+         \t length:%s
+         \t type:%s
+         \t data:%s
+         ''' % (
             self.packet_info, self.length, self.type, self.data)
         return show_str
