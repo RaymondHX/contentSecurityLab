@@ -28,12 +28,15 @@ class Protocol_Restore:
               + "(0, "+str(proto_pkt.protocol_id) +", "+ str(proto_pkt.transaction_id) + ", '"+ now + "', '" + str(
             packet_info.sip) + "', '" + str(packet_info.sport) + "', '" + str(packet_info.dip) + "', '" + str(
             packet_info.dport) + "')"
-        # self.connect.insert(sql)
+        self.connect.insert(sql)
         self.statistic.add_tracker_pkt(proto_pkt, type='request')
         print(proto_pkt)
 
 
     def udp_tracker_announce_request(self, payload, packet_info):
+        ip = packet_info.dip
+        with open("D:\JuniorSpring\信息内容安全\contentSecurityLab\\test\\"+ip+".txt", "wb") as f:
+            f.write(payload)
         conn_id_n = sub_bytes(payload, 0, 8)
         action = 1
         tran_id_n = sub_bytes(payload, 12, 4)
@@ -69,7 +72,7 @@ class Protocol_Restore:
               +", "+str(proto_pkt.ip_addr)+", "+str(proto_pkt.key)+", "+str(proto_pkt.num_want)+", "+str(proto_pkt.port)+", '" + now + "', '" + str(
             packet_info.sip) + "', '" + str(packet_info.sport) + "', '" + str(packet_info.dip) + "', '" + str(
             packet_info.dport) + "')"
-        # self.connect.insert(sql)
+        self.connect.insert(sql)
         self.statistic.add_tracker_pkt(proto_pkt, type='request')
         print(proto_pkt)
 
