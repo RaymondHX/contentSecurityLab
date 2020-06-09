@@ -89,6 +89,11 @@ def byets2ints(bytes):
     result = "".join(string)
     return result
 
+def exchange_bytes(bytearray, begin, length, newBytes):
+    for i in range(begin, begin+length):
+        bytearray[i] = newBytes[i-begin]
+    return bytes(bytearray)
+
 def test_ntohi():
     bytes_test = bytes([0x0, 0x0, 0x0, 0x4])
     print(bytes_test)
