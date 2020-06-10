@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # 创建一个捕包的类
+        # 创建一个捕包的类 线程
         self.data_capture = Capture()
 
         # 因为当数据改变是我们需要data_statistics发出相应的信号，这样我们就可以实现界面中
@@ -39,9 +39,9 @@ class MainWindow(QMainWindow):
         # self.data_statistic.signal.connect(event)
         # 以下代码仅是个例子
         #
-        # self.data_statistics.tracker_pkt_cnt_changed.connect(self.change_track_pkt_cnt)
-        #
-        # self.data_statistics.peer_pkt_cnt_changed.connect(self.change_peer_pkt_cnt)
+        self.data_statistics.tracker_pkt_cnt_changed.connect(self.change_track_pkt_cnt)
+
+        self.data_statistics.peer_pkt_cnt_changed.connect(self.change_peer_pkt_cnt)
         #self.data_statistics.peer_pkt_cnt_changed
 
 
@@ -52,11 +52,11 @@ class MainWindow(QMainWindow):
         :return:
         '''
         print('start capturing!')
-        self.data_capture.capture()
-        self.ui.lineEdit.setText(str(self.data_statistics.tracker_req_pkt_cnt))
-        self.ui.lineEdit_2.setText(str(self.data_statistics.tracker_res_pkt_cnt))
-        self.ui.lineEdit_3.setText(str(self.data_statistics.peer_hs_pkt_cnt))
-        self.ui.lineEdit_4.setText(str(self.data_statistics.peer_msg_pkt_cnt))
+        self.data_capture.start()
+        # self.ui.lineEdit.setText(str(self.data_statistics.tracker_req_pkt_cnt))
+        # self.ui.lineEdit_2.setText(str(self.data_statistics.tracker_res_pkt_cnt))
+        # self.ui.lineEdit_3.setText(str(self.data_statistics.peer_hs_pkt_cnt))
+        # self.ui.lineEdit_4.setText(str(self.data_statistics.peer_msg_pkt_cnt))
 
     def show_tracker_info(self):
         '''
@@ -90,15 +90,13 @@ class MainWindow(QMainWindow):
                 item.setText(_translate("MainWindow", str(i)))
         pass
 
-    # def change_track_pkt_cnt(self, req_cnt, res_cnt):
-    #     print(req_cnt)
-    #     self.ui.tracker_req_line.setText(str(req_cnt))
-    #     self.ui.tracker_res_line.setText(str(res_cnt))
+    def change_track_pkt_cnt(self, req_cnt, res_cnt):
+        self.ui.tracker_req_line.setText(str(req_cnt))
+        self.ui.tracker_res_line.setText(str(res_cnt))
     #
-    # def change_peer_pkt_cnt(self, hs_cnt, msg_cnt):
-    #     print(hs_cnt)
-    #     self.ui.peer_hs_line.setText(str(hs_cnt))
-    #     self.ui.peer_msg_line.setText(str(msg_cnt))
+    def change_peer_pkt_cnt(self, hs_cnt, msg_cnt):
+        self.ui.peer_hs_line.setText(str(hs_cnt))
+        self.ui.peer_msg_line.setText(str(msg_cnt))
 
 
 

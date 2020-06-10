@@ -35,8 +35,6 @@ class Protocol_Restore:
 
     def udp_tracker_announce_request(self, payload, packet_info):
         ip = packet_info.dip
-        with open("D:\JuniorSpring\信息内容安全\contentSecurityLab\\test\\"+ip+".txt", "wb") as f:
-            f.write(payload)
         conn_id_n = sub_bytes(payload, 0, 8)
         action = 1
         tran_id_n = sub_bytes(payload, 12, 4)

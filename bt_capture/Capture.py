@@ -2,13 +2,18 @@
 from scapy.all import *
 from Feature_Recognition import Feature_Recognition
 from bt_protocol_restore.packet_info import Inet_Info
+from PyQt5.QtCore import QThread
 
 
-class Capture:
+class Capture(QThread):
 
     def __init__(self):
+        super(Capture, self).__init__()
         self.rec = Feature_Recognition()
         self.stop_flag = False
+
+    def run(self):
+        self.capture()
 
     def capture(self):
         def stop_handler(pkt):
@@ -38,16 +43,16 @@ class Capture:
                     # 获得该包的ip地址，port以及载荷长度(udp载荷长度)
                     packet_info = Inet_Info(n_pkt.src, n_pkt.dst, t_pkt.sport, t_pkt.dport, len(t_pkt.payload))
                     # 进行UDP包的特征识别
-                    if not isinstance(t_pkt.payload, NoPayload):
-                        self.rec.udp_recognition(t_pkt.payload, packet_info)
+                    # if not isinstance(t_pkt.payload, NoPayload):
+                    #     self.rec.udp_recognition(t_pkt.payload, packet_info)
 
         self.stop_flag = False
 
-        package = sniff(count=1000, prn=lambda x: packet_handler(x), promisc=False, stop_filter = lambda x:stop_handler(x))#, filter='ip host 185.181.60.67')
+        package = sniff(count=0, prn=lambda x: packet_handler(x), promisc=False, stop_filter = lambda x:stop_handler(x))#, filter='ip host 185.181.60.67')
 
 
     def stop_capture(self):
-        print('stop capture')
+        print('stop capturing')
         self.stop_flag = True
 
 

@@ -30,7 +30,7 @@ class send_pollutions:
          send(IP(dst='1.2.3.4') / UDP(dport=123))
 
 if __name__ == '__main__':
-    # test_capture()
+    test_capture()
     # test()
     # test1()
-    send_pollutions().send_udp_announce('111','333')
+    # send_pollutions().send_udp_announce('111','333')

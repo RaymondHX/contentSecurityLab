@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1182</width>
+    <width>1099</width>
     <height>806</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="start_cap_b">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>40</y>
+      <x>10</x>
+      <y>20</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -46,6 +46,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QTableWidget" name="tableWidget_2">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="rowCount">
         <number>10</number>
        </property>
@@ -212,8 +215,8 @@
    <widget class="QPushButton" name="stop_cap_b">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>130</y>
+      <x>140</x>
+      <y>20</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -228,8 +231,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1182</width>
-     <height>23</height>
+     <width>1099</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

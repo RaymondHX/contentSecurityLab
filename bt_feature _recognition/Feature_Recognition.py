@@ -2,6 +2,8 @@ import struct
 
 from bt_protocol_restore.Protocol_Restore import Protocol_Restore
 from bt_protocol_restore.convert import *
+from urllib import parse
+import re
 
 
 class Feature_Recognition:
@@ -17,8 +19,10 @@ class Feature_Recognition:
             peer_message协议
         :return:
         '''
-        sub_rec = [self.tcp_peer_handshake_rec,
-                   self.tcp_peer_message_rec]
+        sub_rec = [#self.tcp_peer_handshake_rec,
+                   #self.tcp_peer_message_rec,
+                   self.tcp_tracker_request_rec,
+                   self.tcp_tracker_response_rec]
         pkt_bytes = bytes(payload)
         for rec in sub_rec:
             if rec(pkt_bytes, packet_info) is True:
@@ -97,6 +101,44 @@ class Feature_Recognition:
             return True
         return False
 
+    def tcp_tracker_request_rec(self, payload, packet_info):
+        payload_str = str(payload)[2:]
+        # http tracker协议
+        # print(payload_str[0:])
+        if payload_str[0:14] == 'GET /announce?':
+
+            url = payload_str.split(' ')[1][10:]
+            fields = url.split('&')
+            for field in fields:
+
+                field_data = field.split('=')
+                field_key = field_data[0]
+                field_value = field_data[1]
+
+                print(field_key + ':' + field_value)
+
+
+
+    def tcp_tracker_response_rec(self, payload, packet_info):
+        payload_str = str(payload)[2:]
+        # # http tracker协议
+        # print(payload_str[0:14])
+
+        if payload_str[0:15] != 'HTTP/1.1 200 OK':
+            return False
+
+        match1 = re.match(r'(.|(\r)|(\n))*(d8:(.|(\r)|(\n))*)', payload_str)
+        if match1 is None:
+            return False
+        data = match1.group(4)
+        print(data)
+        return True
+
+
+
+
+
+
     def tcp_peer_handshake_rec(self, payload, packet_info):
         try:
             protocol_name = sub_bytes(payload, 0, 1)
@@ -122,6 +164,8 @@ class Feature_Recognition:
                     return False
                 # cur_bt_offset后面跟的字节数大于等于5
                 length = ntohi(sub_bytes(payload, cur_bt_offset, 4))
+                if length < 0:
+                    return False
                 cur_bt_offset = cur_bt_offset + length + 4
 
             cur_bt_offset = 0

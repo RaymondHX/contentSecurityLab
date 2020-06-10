@@ -2,18 +2,20 @@ from bt_protocol_restore.protocols.Peer_Handshake import *
 from PyQt5.QtCore import pyqtSignal, QObject
 import time
 
-class Statistic:
+
+class Statistic(QObject):
+
     # 定义信号
     # 第1个int表示requst包的数量，第2个int表示response包的数量
-    # tracker_pkt_cnt_changed = pyqtSignal(int, int)
+    tracker_pkt_cnt_changed = pyqtSignal(int, int)
 
     # 第1个int表示handshake包的数量，第2个int表示message包的数量
-    # peer_pkt_cnt_changed = pyqtSignal(int, int)
+    peer_pkt_cnt_changed = pyqtSignal(int, int)
 
     def __init__(self):
-        # super().__init__()
+        super(Statistic, self).__init__()
         # ip : tracker
-        self.iip = '192.168.2.101'
+        self.iip = '192.168.1.9'
         self.tracker_stat = {}
         self.peer_stat = {}
 
@@ -63,13 +65,12 @@ class Statistic:
             elif pkt.action == 2:
                 pass
 
+        self.tracker_pkt_cnt_changed.emit(self.tracker_res_pkt_cnt, self.tracker_req_pkt_cnt)
+
     def add_peer_pkt(self, pkt):
         ticks = time.time()
-        print(ticks)
         pkt_info = pkt.packet_info
 
-        if ticks - last_time == 0:
-            speed = last_speed
         if pkt_info.sip == self.iip:
             ip = pkt_info.dip
             port = pkt_info.dport
@@ -111,7 +112,7 @@ class Statistic:
             else:
                 self.peer_download_time[ip] = ticks
                 self.peer_stat[ip].download_speed = speed
-
+        self.peer_pkt_cnt_changed.emit(self.peer_hs_pkt_cnt, self.peer_msg_pkt_cnt)
 
 
 class Tracker_Info:

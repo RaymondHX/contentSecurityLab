@@ -12,6 +12,7 @@ def sub_bytes(payload, start, length):
 
     if len(payload) < (start + length):
         raise Exception
+
     subbytes = payload[start:start + length]
     return subbytes
 
@@ -43,7 +44,6 @@ def ntohi(buffer):
     :return:
     '''
     if len(buffer) != 4:
-        print(buffer)
         raise Exception()
     result = struct.unpack('!i', buffer)
     return result[0]
