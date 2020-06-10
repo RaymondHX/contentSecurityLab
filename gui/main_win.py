@@ -30,6 +30,8 @@ class MainWindow(QMainWindow):
 
         self.ui.stop_cap_b.clicked.connect(self.data_capture.stop_capture)
 
+        self.ui.block_b.clicked.connect(self.data_statistics.block)
+
         # 点击tracker信息显示tracker的相关信息
         self.ui.show_tracker_info_b.clicked.connect(self.show_tracker_info)
 

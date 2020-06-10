@@ -225,6 +225,19 @@
      <string>停止捕包</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="block_b">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>100</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>开始阻断</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

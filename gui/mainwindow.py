@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -13,11 +13,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1182, 806)
+        MainWindow.resize(1099, 806)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.start_cap_b = QtWidgets.QPushButton(self.centralwidget)
-        self.start_cap_b.setGeometry(QtCore.QRect(80, 40, 93, 28))
+        self.start_cap_b.setGeometry(QtCore.QRect(10, 20, 93, 28))
         self.start_cap_b.setObjectName("start_cap_b")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 500, 1111, 251))
@@ -29,6 +29,7 @@ class Ui_MainWindow(object):
         self.show_peers_info_b.setObjectName("show_peers_info_b")
         self.gridLayout.addWidget(self.show_peers_info_b, 0, 1, 1, 1)
         self.tableWidget_2 = QtWidgets.QTableWidget(self.gridLayoutWidget)
+        self.tableWidget_2.setAutoFillBackground(True)
         self.tableWidget_2.setRowCount(10)
         self.tableWidget_2.setColumnCount(6)
         self.tableWidget_2.setObjectName("tableWidget_2")
@@ -99,11 +100,14 @@ class Ui_MainWindow(object):
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.peer_msg_line)
         self.verticalLayout.addLayout(self.formLayout)
         self.stop_cap_b = QtWidgets.QPushButton(self.centralwidget)
-        self.stop_cap_b.setGeometry(QtCore.QRect(80, 130, 93, 28))
+        self.stop_cap_b.setGeometry(QtCore.QRect(140, 20, 93, 28))
         self.stop_cap_b.setObjectName("stop_cap_b")
+        self.block_b = QtWidgets.QPushButton(self.centralwidget)
+        self.block_b.setGeometry(QtCore.QRect(0, 100, 93, 28))
+        self.block_b.setObjectName("block_b")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1182, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1099, 25))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -151,3 +155,4 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "peer handshake包的数量"))
         self.label_4.setText(_translate("MainWindow", "peer message包的数量"))
         self.stop_cap_b.setText(_translate("MainWindow", "停止捕包"))
+        self.block_b.setText(_translate("MainWindow", "开始阻断"))

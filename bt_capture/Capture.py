@@ -31,7 +31,7 @@ class Capture(QThread):
                     # 获得应用层TCP数据包
                     t_pkt = pkt[2] # n_pkt[1]
                     # 获得该包的ip地址，port以及载荷长度(tcp载荷长度)
-                    packet_info = Inet_Info(n_pkt.src, n_pkt.dst, t_pkt.sport, t_pkt.dport, len(t_pkt.payload))
+                    packet_info = Inet_Info(n_pkt.src, n_pkt.dst, t_pkt.sport, t_pkt.dport, len(t_pkt.payload), t_pkt)
 
                     # 进行TCP包的特征识别
                     if not isinstance(t_pkt.payload, NoPayload):
@@ -41,10 +41,10 @@ class Capture(QThread):
                     # 获得应用层UDP数据包
                     t_pkt = pkt[2]
                     # 获得该包的ip地址，port以及载荷长度(udp载荷长度)
-                    packet_info = Inet_Info(n_pkt.src, n_pkt.dst, t_pkt.sport, t_pkt.dport, len(t_pkt.payload))
+                    packet_info = Inet_Info(n_pkt.src, n_pkt.dst, t_pkt.sport, t_pkt.dport, len(t_pkt.payload), t_pkt)
                     # 进行UDP包的特征识别
-                    # if not isinstance(t_pkt.payload, NoPayload):
-                    #     self.rec.udp_recognition(t_pkt.payload, packet_info)
+                    if not isinstance(t_pkt.payload, NoPayload):
+                        self.rec.udp_recognition(t_pkt.payload, packet_info)
 
         self.stop_flag = False
 
