@@ -83,7 +83,6 @@ class Statistic(QObject):
             stat = Peer_Info(ip, port)
             self.peer_stat[ip] = stat
 
-
         # 统计握手协议
         if isinstance(pkt, Peer_Handshake):
             self.peer_hs_pkt_cnt+=1
