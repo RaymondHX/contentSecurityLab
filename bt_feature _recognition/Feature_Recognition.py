@@ -106,7 +106,7 @@ class Feature_Recognition:
         # http tracker协议
         # print(payload_str[0:])
         if payload_str[0:14] == 'GET /announce?':
-
+            print(payload_str)
             url = payload_str.split(' ')[1][10:]
             fields = url.split('&')
             for field in fields:
