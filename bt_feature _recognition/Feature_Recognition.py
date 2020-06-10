@@ -104,7 +104,8 @@ class Feature_Recognition:
     def tcp_tracker_request_rec(self, payload, packet_info):
         payload_str = str(payload)[2:]
         # http tracker协议
-        # print(payload_str[0:])
+        print(payload_str[0:])
+
         if payload_str[0:14] == 'GET /announce?':
 
             url = payload_str.split(' ')[1][10:]
@@ -127,16 +128,13 @@ class Feature_Recognition:
         if payload_str[0:15] != 'HTTP/1.1 200 OK':
             return False
 
+
         match1 = re.match(r'(.|(\r)|(\n))*(d8:(.|(\r)|(\n))*)', payload_str)
         if match1 is None:
             return False
         data = match1.group(4)
         print(data)
         return True
-
-
-
-
 
 
     def tcp_peer_handshake_rec(self, payload, packet_info):
