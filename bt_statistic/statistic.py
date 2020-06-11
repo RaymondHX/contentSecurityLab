@@ -14,6 +14,12 @@ class Statistic(QObject):
     # 第1个int表示handshake包的数量，第2个int表示message包的数量
     peer_pkt_cnt_changed = pyqtSignal(int, int)
 
+    # tracker中的信息增加时发送信号，更新UI信息
+    tracker_info_changed = pyqtSignal()
+
+    # peer中信息改变是发送的信号，更新UI信息
+    peer_info_changed = pyqtSignal()
+
     def __init__(self):
         super(Statistic, self).__init__()
         # ip : tracker
@@ -75,7 +81,7 @@ class Statistic(QObject):
                 pass
             elif pkt.action == 2:
                 pass
-
+        self.tracker_info_changed.emit()
         self.tracker_pkt_cnt_changed.emit(self.tracker_res_pkt_cnt, self.tracker_req_pkt_cnt)
 
     def add_peer_pkt(self, pkt):
@@ -86,8 +92,6 @@ class Statistic(QObject):
             ip = pkt_info.dip
             port = pkt_info.dport
         else:
-            if self.block_flag:
-                fin_tcp(pkt_info.t_pkt)
             ip = pkt_info.sip
             port = pkt_info.sport
 

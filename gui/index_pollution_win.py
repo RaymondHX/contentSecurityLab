@@ -44,13 +44,26 @@ class IndexPollutionWindow(QDialog):
             max_ip_3 = int(max_ip_3_str)
             max_ip_4 = int(max_ip_4_str)
         except ValueError:
-            print('ip地址中只能是数字')
+            print('用于污染的ip地址格式不合法')
             pass
             return
         for ip_part in [min_ip_1, min_ip_2, min_ip_3, min_ip_4, max_ip_1, max_ip_2, max_ip_3, max_ip_4]:
             if ip_part < 0 or ip_part > 255:
-                print('ip的每个十进制必须大于0并小于255')
+                print('用于污染的ip地址格式不合法')
                 pass
+
+        # 判断max_ip '大于' min_ip
+        for min_ip_part, max_ip_part in zip([min_ip_4, min_ip_3, min_ip_2, min_ip_1],
+                                            [max_ip_4, max_ip_3, max_ip_2, max_ip_1]):
+            if max_ip_part > min_ip_part:
+                break
+            if max_ip_part == min_ip_part:
+                continue
+            else:
+                print('max_ip 小于 min_ip!,不合法')
+                return
+
+
 
         # 对污染的port进行检查
         if not port_check(pollute_port_str):
@@ -60,7 +73,7 @@ class IndexPollutionWindow(QDialog):
 
         # 对tracker ip进行检查
         if not ip_check(tracker_ip_str):
-            print('tracker 的ip地址不合法')
+            print('tracker ip不合法')
             return
         tracker_ip = tracker_ip_str
 
@@ -71,4 +84,4 @@ class IndexPollutionWindow(QDialog):
         tracker_port = int(tracker_port_str)
 
         # 下面开始进行污染
-        pass
+

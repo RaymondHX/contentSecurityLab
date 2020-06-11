@@ -31,6 +31,7 @@ class Protocol_Restore:
             packet_info.dport) + "')"
         self.connect.insert(sql)
         self.statistic.add_tracker_pkt(proto_pkt, type='request')
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 
 
@@ -73,6 +74,7 @@ class Protocol_Restore:
             packet_info.dport) + "')"
         self.connect.insert(sql)
         self.statistic.add_tracker_pkt(proto_pkt, type='request')
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 
     def udp_tracker_scrape__request(self, payload, packet_info):
@@ -98,6 +100,7 @@ class Protocol_Restore:
         for info_hash in info_hash_list:
             sql = "insert into info_hash_list (connection_id, time, info_hash) values ("+str(conn_id)+", '"+now+"', '"+info_hash+"')"
         self.statistic.add_tracker_pkt(proto_pkt, type='request')
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 
     def udp_tracker_connect_response(self, payload, packet_info):
@@ -114,6 +117,7 @@ class Protocol_Restore:
             packet_info.dport) + "')"
         # self.connect.insert(sql)
         self.statistic.add_tracker_pkt(proto_pkt, type='response')
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 
     def udp_tracker_announce_response(self, payload, packet_info):
@@ -147,6 +151,7 @@ class Protocol_Restore:
             sql = "insert into ip_port_list (transaction_id, time, ip_addr, port) values ("+str(tran_id)+", '"+now+"', '"+str(ip)+"', "+str(port)+")"
             # self.connect.insert(sql)
         self.statistic.add_tracker_pkt(proto_pkt, type='response')
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 
     def udp_tracker_scrape__response(self, payload, packet_info):
@@ -167,6 +172,7 @@ class Protocol_Restore:
 
         # self.connect.insert(sql)
         self.statistic.add_tracker_pkt(proto_pkt, type='response')
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 
     def udp_tracker_error_response(self, payload, packet_info):
@@ -185,6 +191,7 @@ class Protocol_Restore:
 
         # self.connect.insert(sql)
         self.statistic.add_tracker_pkt(proto_pkt, type='response')
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 
     def peer_handshake(self, payload, packet_info):
@@ -192,7 +199,7 @@ class Protocol_Restore:
         protocol_str = str(sub_bytes(payload, 1, 19))
         reserve = sub_bytes(payload, 20, 8)
         sha1_hash = byets2ints(sub_bytes(payload, 28, 20))
-        peer_id = str(sub_bytes(payload, 48, 8), 'ascii')
+        peer_id = str(sub_bytes(payload, 48, 8))
         proto_pkt = Peer_Handshake(sha1_hash, peer_id,packet_info)
         # self.statistic.add_peer_pkt(proto_pkt)
         now = datetime.datetime.now()
@@ -202,6 +209,7 @@ class Protocol_Restore:
 
         # self.connect.insert(sql)
         self.statistic.add_peer_pkt(proto_pkt)
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 
     def peer_message(self, payload, packet_info):
@@ -217,4 +225,6 @@ class Protocol_Restore:
         self.statistic.add_peer_pkt(proto_pkt)
         self.show_text.append(str(proto_pkt))
         print(proto_pkt)
+
+
 
