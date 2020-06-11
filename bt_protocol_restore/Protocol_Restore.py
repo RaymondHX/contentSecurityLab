@@ -10,9 +10,10 @@ import datetime
 
 class Protocol_Restore:
 
-    def __init__(self):
+    def __init__(self, show_text):
         self.statistic = Statistic()
         self.connect = Mysql_Connect("root", "sl488234", "bt_data")
+        self.show_text = show_text
 
     def udp_tracker_connect_request(self, payload, packet_info):
         conn_id_n = sub_bytes(payload, 0, 8)
@@ -214,5 +215,6 @@ class Protocol_Restore:
               ", '"+now+"', '"+str(packet_info.sip)+"', '"+str(packet_info.sport)+"', '"+str(packet_info.dip)+"', '"+str(packet_info.dport)+"')"
         # self.connect.insert(sql)
         self.statistic.add_peer_pkt(proto_pkt)
+        self.show_text.append(str(proto_pkt))
         print(proto_pkt)
 

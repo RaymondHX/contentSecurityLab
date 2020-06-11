@@ -2,6 +2,8 @@ import sys
 from bt_capture.Capture import Capture
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from gui.mainwindow import Ui_MainWindow
+from gui.config_win import ConfigWindow
+from gui.block_win import BlockWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class MainWindow(QMainWindow):
@@ -11,14 +13,15 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # 创建一个捕包的类 线程
-        self.data_capture = Capture()
+        self.data_capture = Capture(self.ui.show_info_text)
 
         # 因为当数据改变是我们需要data_statistics发出相应的信号，这样我们就可以实现界面中
         # 数据的变化
         self.data_statistics = self.data_capture.rec.proto_restore.statistic
 
+        # 捕包状态
+        self.cap_state = False
         self.init_widget()
-
 
     def init_widget(self):
         '''
@@ -28,9 +31,11 @@ class MainWindow(QMainWindow):
         # 点击开始捕包按钮进行捕包
         self.ui.start_cap_b.clicked.connect(self.start_capture)
 
-        self.ui.stop_cap_b.clicked.connect(self.data_capture.stop_capture)
+        self.ui.config_b.clicked.connect(self.show_config)
 
-        self.ui.block_b.clicked.connect(self.data_statistics.block)
+        self.ui.block_b.clicked.connect(self.show_block)
+
+        # self.ui.block_b.clicked.connect(self.data_statistics.block)
 
         # 点击tracker信息显示tracker的相关信息
         self.ui.show_tracker_info_b.clicked.connect(self.show_tracker_info)
@@ -46,19 +51,32 @@ class MainWindow(QMainWindow):
         self.data_statistics.peer_pkt_cnt_changed.connect(self.change_peer_pkt_cnt)
         #self.data_statistics.peer_pkt_cnt_changed
 
+    def show_config(self):
+        self.config_window = ConfigWindow()
+        self.config_window.show()
 
+    def show_block(self):
+        self.block_window = BlockWindow()
+        self.block_window.show()
 
     def start_capture(self):
         '''
         当点击开始捕包按钮时进行捕包
         :return:
         '''
-        print('start capturing!')
-        self.data_capture.start()
-        # self.ui.lineEdit.setText(str(self.data_statistics.tracker_req_pkt_cnt))
-        # self.ui.lineEdit_2.setText(str(self.data_statistics.tracker_res_pkt_cnt))
-        # self.ui.lineEdit_3.setText(str(self.data_statistics.peer_hs_pkt_cnt))
-        # self.ui.lineEdit_4.setText(str(self.data_statistics.peer_msg_pkt_cnt))
+        if self.cap_state is False:
+            print('start capturing!')
+            self.cap_state = True
+            self.data_capture.start()
+            _translate = QtCore.QCoreApplication.translate
+            self.ui.start_cap_b.setText(_translate("MainWindow", "停止捕包"))
+
+        else:
+            print('stop capturing!')
+            self.cap_state = False
+            _translate = QtCore.QCoreApplication.translate
+            self.ui.start_cap_b.setText(_translate("MainWindow", "开始捕包"))
+            self.data_capture.stop_capture()
 
     def show_tracker_info(self):
         '''
@@ -99,10 +117,6 @@ class MainWindow(QMainWindow):
     def change_peer_pkt_cnt(self, hs_cnt, msg_cnt):
         self.ui.peer_hs_line.setText(str(hs_cnt))
         self.ui.peer_msg_line.setText(str(msg_cnt))
-
-
-
-
 
 
 if __name__ == '__main__':

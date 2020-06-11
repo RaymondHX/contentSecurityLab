@@ -1,8 +1,8 @@
 from bt_protocol_restore.protocols.Peer_Handshake import *
 from PyQt5.QtCore import pyqtSignal, QObject
 import time
-from bt_data_control.control import fin_tcp
 
+from bt_data_control.control import Control
 
 
 class Statistic(QObject):
@@ -18,7 +18,6 @@ class Statistic(QObject):
         super(Statistic, self).__init__()
         # ip : tracker
         self.iip = '192.168.1.9'
-        self.block_flag = False
         self.tracker_stat = {}
         self.peer_stat = {}
 
@@ -28,10 +27,15 @@ class Statistic(QObject):
         self.peer_hs_pkt_cnt = 0
         self.peer_upload_time = {}
         self.peer_download_time = {}
+        self.ctrl = Control()
 
     def block(self):
         print('hello')
         self.block_flag = True
+    def unblock(self):
+        print('unhello')
+        self.ctrl.block_addr = []
+        self.block_flag = False
 
     def add_tracker_pkt(self, pkt, type):
         # # 发送信
@@ -86,6 +90,10 @@ class Statistic(QObject):
                 fin_tcp(pkt_info.t_pkt)
             ip = pkt_info.sip
             port = pkt_info.sport
+
+        if Control.block_all_flag:
+            self.ctrl.add_blocked_addr(ip, port)
+            print('add finish')
         if ip in self.peer_stat.keys():
             stat = self.peer_stat[ip]
         else:

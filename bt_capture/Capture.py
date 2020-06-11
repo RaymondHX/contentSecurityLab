@@ -1,16 +1,19 @@
 
 from scapy.all import *
 from Feature_Recognition import Feature_Recognition
+from bt_data_control.control import Control
 from bt_protocol_restore.packet_info import Inet_Info
 from PyQt5.QtCore import QThread
 
 
 class Capture(QThread):
 
-    def __init__(self):
+    def __init__(self, show_text):
         super(Capture, self).__init__()
-        self.rec = Feature_Recognition()
+        self.rec = Feature_Recognition(show_text)
+        self.ctrl = Control()
         self.stop_flag = False
+        self.show_text = show_text
 
     def run(self):
         self.capture()
@@ -21,6 +24,7 @@ class Capture(QThread):
 
         def packet_handler(pkt):
             # 仅处理IPv4数据包
+
             if pkt.type == 0x0800:
                 # 网络层数据包即IP数据包
                 n_pkt = pkt[1]
@@ -28,6 +32,8 @@ class Capture(QThread):
                 # print(hex(bytess[0]))
                 # 处理TCP数据包
                 if n_pkt.proto == 0x06:
+                    print(n_pkt.src)
+                    self.ctrl.block(n_pkt)
                     # 获得应用层TCP数据包
                     t_pkt = pkt[2] # n_pkt[1]
                     # 获得该包的ip地址，port以及载荷长度(tcp载荷长度)
@@ -50,9 +56,7 @@ class Capture(QThread):
 
         package = sniff(count=0, prn=lambda x: packet_handler(x), promisc=False, stop_filter = lambda x:stop_handler(x))#, filter='ip host 185.181.60.67')
 
-
     def stop_capture(self):
-        print('stop capturing')
         self.stop_flag = True
 
 

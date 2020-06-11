@@ -22,6 +22,15 @@ def test1():
     pkt = IPlayer / TCPlayer  # 组合构建成完整数据包
 
     send(pkt) # 发送数据包
+def test_regex():
+
+    ips = ['0.0.0.0', '0.1.22.234', '0.12.123.1234', 'k.2.32.5']
+
+    for ip in ips:
+        match_result = re.match(r'^\d\d?\d?\.\d\d?\d?\.\d\d?\d?\.\d\d?\d?$', ip)
+        if match_result is None:
+            print("wrong ip:" + ip)
+    int('x')
 
 class send_pollutions:
 
@@ -30,7 +39,8 @@ class send_pollutions:
          send(IP(dst='1.2.3.4') / UDP(dport=123))
 
 if __name__ == '__main__':
-    test_capture()
+    # test_capture()
+    test_regex()
     # test()
     # test1()
     # send_pollutions().send_udp_announce('111','333')

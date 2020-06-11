@@ -8,8 +8,9 @@ import re
 
 class Feature_Recognition:
 
-    def __init__(self):
-        self.proto_restore = Protocol_Restore()
+    def __init__(self, show_text):
+        self.proto_restore = Protocol_Restore(show_text)
+        self.show_text = show_text
 
     def tcp_recognition(self, payload, packet_info):
         '''
