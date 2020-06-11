@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
 from gui.index_pollution import Ui_Dialog
 from PyQt5 import QtCore, QtGui, QtWidgets
 from gui.check import *
-
+from bt_index_pollution.send_pollution import *
 
 class IndexPollutionWindow(QDialog):
     def __init__(self):
@@ -69,7 +69,7 @@ class IndexPollutionWindow(QDialog):
         if not port_check(pollute_port_str):
             print('用于污染的端口不合法')
             return
-        pollute_port = int(pollute_port_str)
+        pollute_port = pollute_port_str
 
         # 对tracker ip进行检查
         if not ip_check(tracker_ip_str):
@@ -84,4 +84,4 @@ class IndexPollutionWindow(QDialog):
         tracker_port = int(tracker_port_str)
 
         # 下面开始进行污染
-
+        send_pollution().send_http_announce(tracker_ip,tracker_port,min_ip_part,max_ip_part, pollute_port)
