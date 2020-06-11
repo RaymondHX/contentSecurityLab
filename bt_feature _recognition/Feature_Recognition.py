@@ -136,15 +136,21 @@ class Feature_Recognition:
 
 
     def tcp_peer_handshake_rec(self, payload, packet_info):
+        if packet_info.sip != '192.168.2.101':
+            print(packet_info)
         try:
             protocol_name = sub_bytes(payload, 0, 1)
         except:
             return
-        if protocol_name[0] == 0x13 and len(payload) == 68:
-            self.proto_restore.peer_handshake(payload, packet_info)
-            return True
+        if len(payload) >=68:
+            print(str(sub_bytes(payload, 1, 19)))
+            if protocol_name[0] == 0x13 and str(sub_bytes(payload, 1, 19)) == "b'BitTorrent protocol'":
+                self.proto_restore.peer_handshake(payload, packet_info)
+                return True
 
     def tcp_peer_message_rec(self, payload, packet_info):
+        if packet_info.sip != '192.168.2.101':
+            print(packet_info)
         if len(payload) < 5:
             return False
         type = sub_bytes(payload, 4, 1)

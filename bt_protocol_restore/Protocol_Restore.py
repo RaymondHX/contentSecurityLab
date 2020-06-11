@@ -191,7 +191,7 @@ class Protocol_Restore:
         protocol_str = str(sub_bytes(payload, 1, 19))
         reserve = sub_bytes(payload, 20, 8)
         sha1_hash = byets2ints(sub_bytes(payload, 28, 20))
-        peer_id = str(sub_bytes(payload, 48, 8), 'ascii')
+        peer_id = str(sub_bytes(payload, 48, 8))
         proto_pkt = Peer_Handshake(sha1_hash, peer_id,packet_info)
         # self.statistic.add_peer_pkt(proto_pkt)
         now = datetime.datetime.now()
@@ -213,6 +213,7 @@ class Protocol_Restore:
         sql = "insert into peer_message (length, type,  time, src_ip, src_port, dst_ip, dst_port) values ("+str(proto_pkt.length)+", "+proto_pkt.type+\
               ", '"+now+"', '"+str(packet_info.sip)+"', '"+str(packet_info.sport)+"', '"+str(packet_info.dip)+"', '"+str(packet_info.dport)+"')"
         # self.connect.insert(sql)
-        self.statistic.add_peer_pkt(proto_pkt)
         print(proto_pkt)
+        self.statistic.add_peer_pkt(proto_pkt)
+
 
