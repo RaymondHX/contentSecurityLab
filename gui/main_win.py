@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from gui.mainwindow import Ui_MainWindow
 from gui.config_win import ConfigWindow
 from gui.block_win import BlockWindow
+from gui.index_pollution_win import IndexPollutionWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class MainWindow(QMainWindow):
@@ -35,6 +36,8 @@ class MainWindow(QMainWindow):
 
         self.ui.block_b.clicked.connect(self.show_block)
 
+        self.ui.index_b.clicked.connect(self.show_index_pollution)
+
         # self.ui.block_b.clicked.connect(self.data_statistics.block)
 
         # 点击tracker信息显示tracker的相关信息
@@ -58,6 +61,10 @@ class MainWindow(QMainWindow):
     def show_block(self):
         self.block_window = BlockWindow()
         self.block_window.show()
+
+    def show_index_pollution(self):
+        self.index_pollution_window = IndexPollutionWindow()
+        self.index_pollution_window.show()
 
     def start_capture(self):
         '''

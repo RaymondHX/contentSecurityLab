@@ -31,10 +31,13 @@ class BlockWindow(QDialog):
         self.ui.start_block_b.clicked.connect(self.start_block)
 
     def start_block(self):
+        Control.output_text = self.ui.block_info_t
         for ip, port in self.block_peers:
             self.ctrl.add_blocked_addr(ip, port)
 
     def block_all_peers(self):
+
+        Control.output_text = self.ui.block_info_t
         Control.block_all_flag = True
 
 
