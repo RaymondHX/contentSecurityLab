@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>873</width>
+    <width>881</width>
     <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>block</string>
   </property>
   <widget class="QTextEdit" name="block_info_t">
    <property name="geometry">
@@ -22,15 +22,21 @@
      <height>321</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
+     <y>64</y>
      <width>72</width>
-     <height>15</height>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>peer ip</string>
@@ -41,19 +47,25 @@
     <rect>
      <x>100</x>
      <y>70</y>
-     <width>113</width>
+     <width>141</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>100</y>
+     <y>90</y>
      <width>72</width>
-     <height>15</height>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>peer port</string>
@@ -68,6 +80,12 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+</string>
+   </property>
    <property name="text">
     <string>添加</string>
    </property>
@@ -77,9 +95,12 @@
     <rect>
      <x>100</x>
      <y>100</y>
-     <width>113</width>
+     <width>71</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="peer_t">
@@ -91,6 +112,9 @@
      <height>121</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
@@ -100,6 +124,10 @@
      <width>111</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(111, 210, 255);
+font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>阻断信息显示</string>
@@ -114,35 +142,71 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(111, 210, 255);
+font: 9pt &quot;微软雅黑&quot;;</string>
+   </property>
    <property name="text">
     <string>要阻断的peer信息</string>
    </property>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget">
+  <widget class="QPushButton" name="start_block_b">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>0</y>
-     <width>231</width>
-     <height>32</height>
+     <width>131</width>
+     <height>33</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QPushButton" name="start_block_b">
-      <property name="text">
-       <string>开始阻断</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="block_all_b">
-      <property name="text">
-       <string>阻断所有peers</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+</string>
+   </property>
+   <property name="text">
+    <string>阻断选择的peers</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="block_all_b">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>0</y>
+     <width>121</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+
+	</string>
+   </property>
+   <property name="text">
+    <string>阻断所有peers</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stop_block_b">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>0</y>
+     <width>101</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(255, 85, 0);
+font: 9pt &quot;微软雅黑&quot;;	
+
+	</string>
+   </property>
+   <property name="text">
+    <string>停止所有阻断</string>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -11,16 +11,19 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>索引污染</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>100</y>
+     <y>60</y>
      <width>101</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>tracker ip</string>
@@ -30,10 +33,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>150</y>
+     <y>90</y>
      <width>101</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>tracker port</string>
@@ -43,107 +49,137 @@
    <property name="geometry">
     <rect>
      <x>120</x>
-     <y>100</y>
-     <width>113</width>
+     <y>60</y>
+     <width>151</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="tracker_port_l">
    <property name="geometry">
     <rect>
      <x>120</x>
-     <y>150</y>
-     <width>113</width>
+     <y>90</y>
+     <width>71</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="min_ip_4_l">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>50</y>
+     <x>70</x>
+     <y>160</y>
      <width>41</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="min_ip_3_l">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>50</y>
+     <x>140</x>
+     <y>160</y>
      <width>41</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="min_ip_2_l">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>50</y>
+     <x>210</x>
+     <y>160</y>
      <width>41</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="min_ip_1_l">
    <property name="geometry">
     <rect>
-     <x>650</x>
-     <y>50</y>
+     <x>280</x>
+     <y>160</y>
      <width>41</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="max_ip_4_l">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>90</y>
+     <x>70</x>
+     <y>190</y>
      <width>41</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="max_ip_3_l">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>90</y>
+     <x>140</x>
+     <y>190</y>
      <width>41</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="max_ip_2_l">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>90</y>
+     <x>210</x>
+     <y>190</y>
      <width>41</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="max_ip_1_l">
    <property name="geometry">
     <rect>
-     <x>650</x>
-     <y>90</y>
+     <x>280</x>
+     <y>190</y>
      <width>41</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>490</x>
-     <y>50</y>
+     <x>120</x>
+     <y>160</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -155,8 +191,8 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>50</y>
+     <x>190</x>
+     <y>160</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -168,8 +204,8 @@
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>50</y>
+     <x>260</x>
+     <y>160</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -181,8 +217,8 @@
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>90</y>
+     <x>190</x>
+     <y>190</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -194,8 +230,8 @@
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>490</x>
-     <y>90</y>
+     <x>120</x>
+     <y>190</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -207,8 +243,8 @@
   <widget class="QLabel" name="label_9">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>90</y>
+     <x>260</x>
+     <y>190</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -220,11 +256,14 @@
   <widget class="QLabel" name="label_10">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>50</y>
+     <x>10</x>
+     <y>154</y>
      <width>72</width>
-     <height>15</height>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>最小ip</string>
@@ -233,11 +272,14 @@
   <widget class="QLabel" name="label_11">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>100</y>
+     <x>10</x>
+     <y>185</y>
      <width>72</width>
-     <height>15</height>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>最大ip</string>
@@ -246,11 +288,14 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>140</y>
+     <x>20</x>
+     <y>220</y>
      <width>72</width>
-     <height>15</height>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>port</string>
@@ -259,21 +304,28 @@
   <widget class="QLineEdit" name="polluted_port_l">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>140</y>
+     <x>70</x>
+     <y>220</y>
      <width>113</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_12">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>50</y>
+     <x>0</x>
+     <y>30</y>
      <width>151</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(111, 210, 255);
+font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>污染的tracker信息</string>
@@ -282,14 +334,50 @@
   <widget class="QPushButton" name="pollute_b">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>230</y>
+     <x>60</x>
+     <y>290</y>
      <width>93</width>
      <height>28</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+</string>
+   </property>
    <property name="text">
     <string>开始污染</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_13">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>130</y>
+     <width>181</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(111, 210, 255);
+font: 9pt &quot;微软雅黑&quot;;</string>
+   </property>
+   <property name="text">
+    <string>用于污染的ip和port信息</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="pollution_info_l">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>20</y>
+     <width>441</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
    </property>
   </widget>
  </widget>

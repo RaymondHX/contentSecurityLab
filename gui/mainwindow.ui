@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>BT 流量分析</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="gridLayoutWidget">
@@ -24,10 +24,68 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
+       <property name="rowCount">
+        <number>10</number>
+       </property>
+       <property name="columnCount">
+        <number>5</number>
+       </property>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <column>
+        <property name="text">
+         <string>ip</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>port</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>state</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>seeders</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>users</string>
+        </property>
+       </column>
+       <item row="0" column="0">
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+      </widget>
+     </item>
      <item row="1" column="1">
       <widget class="QTableWidget" name="tableWidget_2">
        <property name="autoFillBackground">
         <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
        </property>
        <property name="rowCount">
         <number>10</number>
@@ -79,6 +137,10 @@
      </item>
      <item row="0" column="1">
       <widget class="QPushButton" name="show_peers_info_b">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>peers信息</string>
        </property>
@@ -86,59 +148,13 @@
      </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="show_tracker_info_b">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>tracker信息</string>
        </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QTableWidget" name="tableWidget">
-       <property name="rowCount">
-        <number>10</number>
-       </property>
-       <property name="columnCount">
-        <number>5</number>
-       </property>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <column>
-        <property name="text">
-         <string>ip</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>port</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>state</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>seeders</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>users</string>
-        </property>
-       </column>
-       <item row="0" column="0">
-        <property name="text">
-         <string>1</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
@@ -148,8 +164,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>331</width>
-      <height>31</height>
+      <width>430</width>
+      <height>33</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -168,6 +184,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="start_cap_b">
+       <property name="styleSheet">
+        <string notr="true">
+background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>开始捕包</string>
        </property>
@@ -188,6 +210,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="block_b">
+       <property name="styleSheet">
+        <string notr="true">
+background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>阻断</string>
        </property>
@@ -221,6 +249,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="config_b">
+       <property name="styleSheet">
+        <string notr="true">
+background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>配置</string>
        </property>
@@ -228,6 +262,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="index_b">
+       <property name="styleSheet">
+        <string notr="true">
+background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>索引</string>
        </property>
@@ -260,60 +300,118 @@
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>tracker request包的数量</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="tracker_req_line"/>
+      <widget class="QLineEdit" name="tracker_req_line">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>tracker response包的数量</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="tracker_res_line"/>
+      <widget class="QLineEdit" name="tracker_res_line">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>peer handshake包的数量</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="peer_hs_line"/>
+      <widget class="QLineEdit" name="peer_hs_line">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
        <property name="text">
         <string>peer message包的数量</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="peer_msg_line"/>
+      <widget class="QLineEdit" name="peer_msg_line">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>550</x>
+      <x>350</x>
       <y>70</y>
-      <width>541</width>
+      <width>741</width>
       <height>401</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
-      <widget class="QTextEdit" name="show_info_text"/>
+      <widget class="QTextEdit" name="show_info_text">
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
+</string>
+       </property>
+      </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>50</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(111, 210, 255);
+font: 9pt &quot;微软雅黑&quot;;</string>
+    </property>
+    <property name="text">
+     <string>捕包信息展示</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

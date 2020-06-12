@@ -32,7 +32,7 @@ class Capture(QThread):
                 # print(hex(bytess[0]))
                 # 处理TCP数据包
                 if n_pkt.proto == 0x06:
-                    print(n_pkt.src)
+                    # print(n_pkt.src)
                     self.ctrl.block(n_pkt)
                     # 获得应用层TCP数据包
                     t_pkt = pkt[2] # n_pkt[1]

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>configure</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -21,6 +21,13 @@
      <width>341</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(155, 255, 88);
+font: 9pt &quot;微软雅黑&quot;;	
+
+	</string>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
@@ -35,35 +42,68 @@
      <x>90</x>
      <y>40</y>
      <width>371</width>
-     <height>80</height>
+     <height>92</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
     <item row="0" column="0">
      <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
+      </property>
       <property name="text">
        <string>本地ip地址</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="host_ip_t">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
+      </property>
+     </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="log_c">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
+      </property>
       <property name="text">
        <string>是否记录日志</string>
       </property>
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QCheckBox" name="checkBox_2">
+     <widget class="QCheckBox" name="db_c">
+      <property name="styleSheet">
+       <string notr="true">font: 9pt &quot;微软雅黑&quot;;</string>
+      </property>
       <property name="text">
        <string>是否将捕获的数据存入数据库</string>
       </property>
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="del_log_b">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>80</y>
+     <width>91</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(255, 85, 0);
+font: 9pt &quot;微软雅黑&quot;;	
+
+	</string>
+   </property>
+   <property name="text">
+    <string>删除日志</string>
+   </property>
   </widget>
  </widget>
  <resources/>

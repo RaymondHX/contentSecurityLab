@@ -30,6 +30,9 @@ class BlockWindow(QDialog):
         # 开始阻断添加的peers
         self.ui.start_block_b.clicked.connect(self.start_block)
 
+        # 停止所有的阻断
+        self.ui.stop_block_b.clicked.connect(self.stop_all_block)
+
     def start_block(self):
         Control.output_text = self.ui.block_info_t
         for ip, port in self.block_peers:
@@ -40,6 +43,8 @@ class BlockWindow(QDialog):
         Control.output_text = self.ui.block_info_t
         Control.block_all_flag = True
 
+    def stop_all_block(self):
+        self.ctrl.stop_block()
 
     def add_block_peer(self):
         ip_str = self.ui.ip_l.text()
@@ -63,7 +68,7 @@ class BlockWindow(QDialog):
         self.ui.peer_t.append(peer_info)
 
 
-
-    def accept(self):
-        print('hello')
-
+    def closeEvent(self, event):
+        '''停止所有的block'''
+        self.stop_all_block()
+        event.accept()

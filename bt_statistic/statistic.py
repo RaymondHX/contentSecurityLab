@@ -3,6 +3,8 @@ from PyQt5.QtCore import pyqtSignal, QObject
 import time
 
 from bt_data_control.control import Control
+from config import Configure
+from log import Log
 
 
 class Statistic(QObject):
@@ -20,6 +22,8 @@ class Statistic(QObject):
     # peer中信息改变是发送的信号，更新UI信息
     peer_info_changed = pyqtSignal()
 
+
+
     def __init__(self):
         super(Statistic, self).__init__()
         # ip : tracker
@@ -34,26 +38,20 @@ class Statistic(QObject):
         self.peer_upload_time = {}
         self.peer_download_time = {}
         self.ctrl = Control()
-
-    def block(self):
-        print('hello')
-        self.block_flag = True
-    def unblock(self):
-        print('unhello')
-        self.ctrl.block_addr = []
-        self.block_flag = False
+        # log
+        self.log = Log()
 
     def add_tracker_pkt(self, pkt, type):
         # # 发送信
         # self.dataChanged.emit("old status", "new status")
         pkt_info = pkt.packet_info
+        cur_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         if type == 'response':
             self.tracker_res_pkt_cnt+=1
             ip = pkt_info.sip
             port = pkt_info.sport
         else:
             self.tracker_req_pkt_cnt+=1
-
             ip = pkt_info.dip
             port = pkt_info.dport
 
@@ -64,28 +62,39 @@ class Statistic(QObject):
             self.tracker_stat[ip] = stat
         if type == 'response':
             if pkt.action == 0:
-                pass
+                self.log.add_log('[%s]:udp tracker[ip:%s port:%s]进行了connect response\n' % (cur_time, ip, port))
             elif pkt.action == 1:
                 seeders = pkt.seeders
                 user_cnt = len(pkt.ip_port_list)
                 stat.set_seeders(seeders)
                 stat.set_users(user_cnt)
+                self.log.add_log('[%s]:udp tracker[ip:%s port:%s]进行了announce response\n' % (cur_time, ip, port))
             elif pkt.action == 2:
+                self.log.add_log('[%s]:udp tracker[ip:%s port:%s]进行了scrapy response\n' % (cur_time, ip, port))
                 pass
             elif pkt.action == 3:
+                self.log.add_log('[%s]:udp tracker[ip:%s port:%s]进行了error response\n' % (cur_time, ip, port))
                 pass
         else:
             if pkt.action == 0:
                 pass
+                self.log.add_log('[%s]:本地主机向udp tracker[ip:%s port:%s]进行了connect request\n' % (cur_time, ip, port))
             elif pkt.action == 1:
                 pass
+                self.log.add_log('[%s]:本地主机向udp tracker[ip:%s port:%s]进行了announce request\n' % (cur_time, ip, port))
             elif pkt.action == 2:
                 pass
+                self.log.add_log('[%s]:本地主机向udp tracker[ip:%s port:%s]进行了scrapy request\n' % (cur_time, ip, port))
         self.tracker_info_changed.emit()
         self.tracker_pkt_cnt_changed.emit(self.tracker_res_pkt_cnt, self.tracker_req_pkt_cnt)
 
+    def add_http_tracker(self, pkt, type):
+        pass
+
+
     def add_peer_pkt(self, pkt):
         ticks = time.time()
+        cur_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         pkt_info = pkt.packet_info
 
         if pkt_info.sip == self.iip:
@@ -97,7 +106,7 @@ class Statistic(QObject):
 
         if Control.block_all_flag:
             self.ctrl.add_blocked_addr(ip, port)
-            print('add finish')
+
         if ip in self.peer_stat.keys():
             stat = self.peer_stat[ip]
         else:
@@ -107,7 +116,9 @@ class Statistic(QObject):
         # 统计握手协议
         if isinstance(pkt, Peer_Handshake):
             self.peer_hs_pkt_cnt+=1
+            self.log.add_log('[%s]:本地主机与peer[ip:%s port:%s]进行了handshake\n' % (cur_time, ip, port))
         else:
+            self.log.add_log('[%s]:本地主机与peer[ip:%s port:%s]发送了数据\n' % (cur_time, ip, port))
             self.peer_msg_pkt_cnt+=1
             last_time = 0
             speed = self.peer_stat[ip].upload_speed
@@ -132,6 +143,7 @@ class Statistic(QObject):
             else:
                 self.peer_download_time[ip] = ticks
                 self.peer_stat[ip].download_speed = speed
+        self.peer_info_changed.emit()
         self.peer_pkt_cnt_changed.emit(self.peer_hs_pkt_cnt, self.peer_msg_pkt_cnt)
 
 

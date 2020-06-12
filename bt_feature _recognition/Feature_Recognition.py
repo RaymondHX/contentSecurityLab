@@ -106,52 +106,42 @@ class Feature_Recognition:
         payload_str = str(payload)[2:]
         # http tracker协议
         if payload_str[0:14] == 'GET /announce?':
-            # print(payload_str)
-            url = payload_str.split(' ')[1][10:]
-            fields = url.split('&')
-            for field in fields:
-
-                field_data = field.split('=')
-                field_key = field_data[0]
-                field_value = field_data[1]
-
-                # print(field_key + ':' + field_value)
-
-
+            # 进行协议恢复
+            self.proto_restore.http_tracker_request(payload, packet_info)
 
     def tcp_tracker_response_rec(self, payload, packet_info):
         payload_str = str(payload)[2:]
         # # http tracker协议
         # print(payload_str[0:14])
 
+
         if payload_str[0:15] != 'HTTP/1.1 200 OK':
             return False
-
 
         match1 = re.match(r'(.|(\r)|(\n))*(d8:(.|(\r)|(\n))*)', payload_str)
         if match1 is None:
             return False
-        data = match1.group(4)
-        # print(data)
+        self.proto_restore.http_tracker_response(match1.group(4), packet_info)
+
         return True
 
 
     def tcp_peer_handshake_rec(self, payload, packet_info):
-        if packet_info.sip != '192.168.2.101':
-            print(packet_info)
+        # if packet_info.sip != '192.168.2.101':
+        #     print(packet_info)
         try:
             protocol_name = sub_bytes(payload, 0, 1)
         except:
             return
         if len(payload) >=68:
-            print(str(sub_bytes(payload, 1, 19)))
+            # print(str(sub_bytes(payload, 1, 19)))
             if protocol_name[0] == 0x13 and str(sub_bytes(payload, 1, 19)) == "b'BitTorrent protocol'":
                 self.proto_restore.peer_handshake(payload, packet_info)
                 return True
 
     def tcp_peer_message_rec(self, payload, packet_info):
-        if packet_info.sip != '192.168.2.101':
-            print(packet_info)
+        # if packet_info.sip != '192.168.2.101':
+        #     print(packet_info)
         if len(payload) < 5:
             return False
         type = sub_bytes(payload, 4, 1)

@@ -12,18 +12,21 @@ class Control:
     def __init__(self):
         pass
 
+    def stop_block(self):
+        Control.block_addr = []
+        Control.block_all_flag = False
+        Control.output_text = None
+
     def add_blocked_addr(self, ip, port):
-
-
         if (ip, port) not in Control.block_addr:
             if Control.output_text is not None:
                 Control.output_text.append('ip:%s, port:%s is blocking' % (ip, port))
-            print('ip:%s, port:%s is blocking' % (ip, port))
+            # print('ip:%s, port:%s is blocking' % (ip, port))
             Control.block_addr.append((ip, port))
 
     def block(self, n_pkt):
         t_pkt = n_pkt[1]
-        print(Control.block_addr)
+        # print(Control.block_addr)
         if (n_pkt.src, t_pkt.sport) in Control.block_addr:
             IPlayer = IP(dst=n_pkt.src)
 
@@ -32,14 +35,16 @@ class Control:
 
             fin_ack_pkt = sr1(fin_pkt, timeout=5)
             if fin_ack_pkt is None:
-                Control.output_text.append('对[ip:%s port:%s]阻断失败，正在尝试下一次阻断' % (n_pkt.src, t_pkt.dport))
-                print('对[ip:%s port:%s]阻断失败，正在尝试下一次阻断' % (n_pkt.src, t_pkt.dport))
+                if Control.output_text is not None:
+                    Control.output_text.append('对[ip:%s port:%s]阻断失败，正在尝试下一次阻断' % (n_pkt.src, t_pkt.dport))
+                # print('对[ip:%s port:%s]阻断失败，正在尝试下一次阻断' % (n_pkt.src, t_pkt.dport))
                 return
             last_ack_pkt = IPlayer / TCP(sport=t_pkt.sport, dport=t_pkt.dport, flags='A', ack=fin_ack_pkt.seq + 1)
             send(last_ack_pkt)
             Control.block_addr.remove((n_pkt.src, t_pkt.sport))
-            Control.output_text.append('block ip:%s, port%s sucessfully' % (n_pkt.src, t_pkt.sport))
-            print('block ip:%s, port%s sucessfully' % (n_pkt.src, t_pkt.sport))
+            if Control.output_text is not None:
+                Control.output_text.append('block ip:%s, port%s sucessfully' % (n_pkt.src, t_pkt.sport))
+            #print('block ip:%s, port%s sucessfully' % (n_pkt.src, t_pkt.sport))
 
 
 

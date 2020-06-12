@@ -63,6 +63,10 @@ class IndexPollutionWindow(QDialog):
                 print('max_ip 小于 min_ip!,不合法')
                 return
 
+        # 被污染的ip检查完毕
+        min_ip = [min_ip_4, min_ip_3, min_ip_2, min_ip_1]
+        max_ip = [max_ip_4, max_ip_3, max_ip_2, max_ip_1]
+
 
 
         # 对污染的port进行检查
@@ -84,4 +88,4 @@ class IndexPollutionWindow(QDialog):
         tracker_port = int(tracker_port_str)
 
         # 下面开始进行污染
-        send_pollution().send_http_announce(tracker_ip,tracker_port,min_ip_part,max_ip_part, pollute_port)
+        send_pollution().send_http_announce(tracker_ip, tracker_port, min_ip, max_ip, pollute_port, self.ui.pollution_info_l)

@@ -52,6 +52,10 @@ class MainWindow(QMainWindow):
         self.data_statistics.tracker_pkt_cnt_changed.connect(self.change_track_pkt_cnt)
 
         self.data_statistics.peer_pkt_cnt_changed.connect(self.change_peer_pkt_cnt)
+
+        self.data_statistics.tracker_info_changed.connect(self.show_tracker_info)
+
+        self.data_statistics.peer_info_changed.connect(self.show_peers_info)
         #self.data_statistics.peer_pkt_cnt_changed
 
     def show_config(self):
@@ -72,14 +76,16 @@ class MainWindow(QMainWindow):
         :return:
         '''
         if self.cap_state is False:
-            print('start capturing!')
+            self.ui.show_info_text.append('start capturing!')
+            # print('start capturing!')
             self.cap_state = True
             self.data_capture.start()
             _translate = QtCore.QCoreApplication.translate
             self.ui.start_cap_b.setText(_translate("MainWindow", "停止捕包"))
 
         else:
-            print('stop capturing!')
+            self.ui.show_info_text.append('stop capturing!')
+            # print('stop capturing!')
             self.cap_state = False
             _translate = QtCore.QCoreApplication.translate
             self.ui.start_cap_b.setText(_translate("MainWindow", "开始捕包"))
@@ -90,9 +96,9 @@ class MainWindow(QMainWindow):
         点击tracker信息按钮是展示tracker的信息
         :return:
         '''
-        print('show tracker info!')
+        # print('show tracker info!')
         _translate = QtCore.QCoreApplication.translate
-        print(self.data_statistics.tracker_stat)
+        # print(self.data_statistics.tracker_stat)
         for row, stat in zip(range(len(self.data_statistics.tracker_stat.values())), self.data_statistics.tracker_stat.values()):
             for column, i in zip(range(5), stat.get_info_list()):
                 item = QtWidgets.QTableWidgetItem()
@@ -105,9 +111,9 @@ class MainWindow(QMainWindow):
         点击peer信息按钮时展示peers的信息
         :return:
         '''
-        print('show peers info1')
+        # print('show peers info1')
         _translate = QtCore.QCoreApplication.translate
-        print(self.data_statistics.peer_stat)
+        # print(self.data_statistics.peer_stat)
         for row, stat in zip(range(len(self.data_statistics.peer_stat.values())),
                              self.data_statistics.peer_stat.values()):
             for column, i in zip(range(6), stat.get_info_list()):

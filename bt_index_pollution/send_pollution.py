@@ -43,7 +43,7 @@ class send_pollution:
                 'X-Forwarded-For': '1.1.1.1'
             }
             request_announce = request.Request(url=url, headers=fake_headers)
-            print(url)
+            # print(url)
             output_text.append("对tracker添加IP为"+newip+"的索引污染")
             # response_announce = request.urlopen(request_announce)
             for i in range(3, -1, -1):
