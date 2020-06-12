@@ -81,9 +81,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-background-color: rgb(155, 255, 88);
-font: 9pt &quot;微软雅黑&quot;;	
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
 </string>
    </property>
    <property name="text">
@@ -160,8 +158,7 @@ font: 9pt &quot;微软雅黑&quot;;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(155, 255, 88);
-font: 9pt &quot;微软雅黑&quot;;	
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
 </string>
    </property>
    <property name="text">
@@ -178,9 +175,7 @@ font: 9pt &quot;微软雅黑&quot;;
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-background-color: rgb(155, 255, 88);
-font: 9pt &quot;微软雅黑&quot;;	
+    <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
 
 	</string>
    </property>

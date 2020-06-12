@@ -34,7 +34,7 @@
         <number>10</number>
        </property>
        <property name="columnCount">
-        <number>5</number>
+        <number>6</number>
        </property>
        <row/>
        <row/>
@@ -48,12 +48,17 @@
        <row/>
        <column>
         <property name="text">
+         <string>type</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
          <string>ip</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>port</string>
+         <string>type</string>
         </property>
        </column>
        <column>
@@ -71,7 +76,7 @@
          <string>users</string>
         </property>
        </column>
-       <item row="0" column="0">
+       <item row="0" column="1">
         <property name="text">
          <string/>
         </property>
@@ -185,9 +190,7 @@
      <item>
       <widget class="QPushButton" name="start_cap_b">
        <property name="styleSheet">
-        <string notr="true">
-background-color: rgb(155, 255, 88);
-font: 9pt &quot;微软雅黑&quot;;	
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
 </string>
        </property>
        <property name="text">
@@ -211,9 +214,7 @@ font: 9pt &quot;微软雅黑&quot;;
      <item>
       <widget class="QPushButton" name="block_b">
        <property name="styleSheet">
-        <string notr="true">
-background-color: rgb(155, 255, 88);
-font: 9pt &quot;微软雅黑&quot;;	
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
 </string>
        </property>
        <property name="text">
@@ -250,9 +251,7 @@ font: 9pt &quot;微软雅黑&quot;;
      <item>
       <widget class="QPushButton" name="config_b">
        <property name="styleSheet">
-        <string notr="true">
-background-color: rgb(155, 255, 88);
-font: 9pt &quot;微软雅黑&quot;;	
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
 </string>
        </property>
        <property name="text">
@@ -263,9 +262,7 @@ font: 9pt &quot;微软雅黑&quot;;
      <item>
       <widget class="QPushButton" name="index_b">
        <property name="styleSheet">
-        <string notr="true">
-background-color: rgb(155, 255, 88);
-font: 9pt &quot;微软雅黑&quot;;	
+        <string notr="true">font: 9pt &quot;微软雅黑&quot;;	
 </string>
        </property>
        <property name="text">

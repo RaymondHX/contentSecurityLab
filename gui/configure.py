@@ -16,9 +16,7 @@ class Ui_Dialog(object):
         Dialog.resize(773, 300)
         self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(190, 250, 341, 32))
-        self.buttonBox.setStyleSheet("\n"
-"background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.buttonBox.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "\n"
 "    ")
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)

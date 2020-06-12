@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         # print(self.data_statistics.tracker_stat)
         for row, stat in zip(range(len(self.data_statistics.tracker_stat.values())), self.data_statistics.tracker_stat.values()):
-            for column, i in zip(range(5), stat.get_info_list()):
+            for column, i in zip(range(6), stat.get_info_list()):
                 item = QtWidgets.QTableWidgetItem()
                 self.ui.tableWidget.setItem(row, column, item)
                 item = self.ui.tableWidget.item(row, column)

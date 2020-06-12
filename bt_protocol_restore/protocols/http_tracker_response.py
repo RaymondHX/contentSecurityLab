@@ -5,11 +5,14 @@ class Http_Tracker_Response:
 
     '''
 
-    def __init__(self):
+    def __init__(self, packet_info):
+        self.packet_info = packet_info
         self.data = None
 
-    def data(self, data):
+    def set_data(self, data):
         self.data = data
 
     def __str__(self):
-        pass
+        show_str = '''http tracker announce request protocol:\n
+        %s'''  % (self.packet_info)
+        return show_str

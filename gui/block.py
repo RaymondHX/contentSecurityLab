@@ -32,9 +32,7 @@ class Ui_Dialog(object):
         self.label_2.setObjectName("label_2")
         self.add_b = QtWidgets.QPushButton(Dialog)
         self.add_b.setGeometry(QtCore.QRect(10, 140, 61, 28))
-        self.add_b.setStyleSheet("\n"
-"background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.add_b.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "")
         self.add_b.setObjectName("add_b")
         self.port_l = QtWidgets.QLineEdit(Dialog)
@@ -57,15 +55,12 @@ class Ui_Dialog(object):
         self.label_4.setObjectName("label_4")
         self.start_block_b = QtWidgets.QPushButton(Dialog)
         self.start_block_b.setGeometry(QtCore.QRect(10, 0, 131, 33))
-        self.start_block_b.setStyleSheet("background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.start_block_b.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "")
         self.start_block_b.setObjectName("start_block_b")
         self.block_all_b = QtWidgets.QPushButton(Dialog)
         self.block_all_b.setGeometry(QtCore.QRect(150, 0, 121, 33))
-        self.block_all_b.setStyleSheet("\n"
-"background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.block_all_b.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "\n"
 "    ")
         self.block_all_b.setObjectName("block_all_b")

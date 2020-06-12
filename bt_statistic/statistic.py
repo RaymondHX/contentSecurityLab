@@ -58,7 +58,8 @@ class Statistic(QObject):
         if ip in self.tracker_stat.keys():
             stat = self.tracker_stat[ip]
         else:
-            stat = Tracker_Info(ip, port)
+            stat = Tracker_Info('udp', ip, port)
+            stat = Tracker_Info('udp', ip, port)
             self.tracker_stat[ip] = stat
         if type == 'response':
             if pkt.action == 0:
@@ -89,8 +90,28 @@ class Statistic(QObject):
         self.tracker_pkt_cnt_changed.emit(self.tracker_res_pkt_cnt, self.tracker_req_pkt_cnt)
 
     def add_http_tracker(self, pkt, type):
-        pass
+        # self.dataChanged.emit("old status", "new status")
+        pkt_info = pkt.packet_info
+        cur_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        if type == 'response':
+            self.tracker_res_pkt_cnt += 1
+            ip = pkt_info.sip
+            port = pkt_info.sport
+            self.log.add_log('[%s]:http tracker[ip:%s port:%s]进行了announce response\n' % (cur_time, ip, port))
+        else:
+            self.tracker_req_pkt_cnt += 1
+            ip = pkt_info.dip
+            port = pkt_info.dport
+            self.log.add_log('[%s]:本地主机向udp tracker[ip:%s port:%s]发送了annnounce request\n' % (cur_time, ip, port))
 
+        if ip in self.tracker_stat.keys():
+            stat = self.tracker_stat[ip]
+        else:
+            stat = Tracker_Info('http', ip, port)
+            self.tracker_stat[ip] = stat
+
+        self.tracker_info_changed.emit()
+        self.tracker_pkt_cnt_changed.emit(self.tracker_res_pkt_cnt, self.tracker_req_pkt_cnt)
 
     def add_peer_pkt(self, pkt):
         ticks = time.time()
@@ -148,7 +169,8 @@ class Statistic(QObject):
 
 
 class Tracker_Info:
-    def __init__(self, ip, port):
+    def __init__(self,type, ip, port):
+        self.type = type
         self.ip = ip
         self.port = port
         self.state = 0
@@ -167,7 +189,7 @@ class Tracker_Info:
     def __str__(self):
         pass
     def get_info_list(self):
-        return [self.ip, self.port, self.state, self.seeders, self.users]
+        return [self.type, self.ip, self.port, self.state, self.seeders, self.users]
 
 
 class Peer_Info:
@@ -184,7 +206,7 @@ class Peer_Info:
         pass
 
     def get_info_list(self):
-        return [self.ip, self.port, self.client, self.download_speed, self.upload_speed, self.downloaded]
+        return [self.ip, self.port, self.client, str(self.download_speed) + ' Bps' , str(self.upload_speed) + ' Bps', self.downloaded]
 
 
 

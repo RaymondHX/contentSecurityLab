@@ -103,9 +103,7 @@ class Ui_Dialog(object):
         self.label_12.setObjectName("label_12")
         self.pollute_b = QtWidgets.QPushButton(Dialog)
         self.pollute_b.setGeometry(QtCore.QRect(60, 290, 93, 28))
-        self.pollute_b.setStyleSheet("\n"
-"background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.pollute_b.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "")
         self.pollute_b.setObjectName("pollute_b")
         self.label_13 = QtWidgets.QLabel(Dialog)
@@ -114,9 +112,14 @@ class Ui_Dialog(object):
 "font: 9pt \"微软雅黑\";")
         self.label_13.setObjectName("label_13")
         self.pollution_info_l = QtWidgets.QTextEdit(Dialog)
-        self.pollution_info_l.setGeometry(QtCore.QRect(410, 20, 441, 301))
+        self.pollution_info_l.setGeometry(QtCore.QRect(410, 40, 441, 281))
         self.pollution_info_l.setStyleSheet("font: 9pt \"微软雅黑\";")
         self.pollution_info_l.setObjectName("pollution_info_l")
+        self.label_14 = QtWidgets.QLabel(Dialog)
+        self.label_14.setGeometry(QtCore.QRect(420, 20, 121, 16))
+        self.label_14.setStyleSheet("color:rgb(111, 210, 255);\n"
+"font: 9pt \"微软雅黑\";")
+        self.label_14.setObjectName("label_14")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -138,3 +141,4 @@ class Ui_Dialog(object):
         self.label_12.setText(_translate("Dialog", "污染的tracker信息"))
         self.pollute_b.setText(_translate("Dialog", "开始污染"))
         self.label_13.setText(_translate("Dialog", "用于污染的ip和port信息"))
+        self.label_14.setText(_translate("Dialog", "污染信息显示"))

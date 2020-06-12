@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "")
         self.tableWidget.setRowCount(10)
-        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setColumnCount(6)
         self.tableWidget.setObjectName("tableWidget")
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
@@ -39,7 +39,9 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setItem(0, 0, item)
+        self.tableWidget.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setItem(0, 1, item)
         self.gridLayout.addWidget(self.tableWidget, 1, 0, 1, 1)
         self.tableWidget_2 = QtWidgets.QTableWidget(self.gridLayoutWidget)
         self.tableWidget_2.setAutoFillBackground(True)
@@ -80,18 +82,14 @@ class Ui_MainWindow(object):
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.start_cap_b = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.start_cap_b.setStyleSheet("\n"
-"background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.start_cap_b.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "")
         self.start_cap_b.setObjectName("start_cap_b")
         self.horizontalLayout.addWidget(self.start_cap_b)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.block_b = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.block_b.setStyleSheet("\n"
-"background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.block_b.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "")
         self.block_b.setObjectName("block_b")
         self.horizontalLayout.addWidget(self.block_b)
@@ -100,16 +98,12 @@ class Ui_MainWindow(object):
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
         self.config_b = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.config_b.setStyleSheet("\n"
-"background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.config_b.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "")
         self.config_b.setObjectName("config_b")
         self.horizontalLayout.addWidget(self.config_b)
         self.index_b = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.index_b.setStyleSheet("\n"
-"background-color: rgb(155, 255, 88);\n"
-"font: 9pt \"微软雅黑\";    \n"
+        self.index_b.setStyleSheet("font: 9pt \"微软雅黑\";    \n"
 "")
         self.index_b.setObjectName("index_b")
         self.horizontalLayout.addWidget(self.index_b)
@@ -193,14 +187,16 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "BT 流量分析"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "ip"))
+        item.setText(_translate("MainWindow", "type"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "port"))
+        item.setText(_translate("MainWindow", "ip"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "state"))
+        item.setText(_translate("MainWindow", "type"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("MainWindow", "seeders"))
+        item.setText(_translate("MainWindow", "state"))
         item = self.tableWidget.horizontalHeaderItem(4)
+        item.setText(_translate("MainWindow", "seeders"))
+        item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "users"))
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)

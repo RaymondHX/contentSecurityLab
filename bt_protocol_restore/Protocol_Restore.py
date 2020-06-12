@@ -220,13 +220,16 @@ class Protocol_Restore:
         # print(payload_str)
         url = payload_str.split(' ')[1][10:]
         fields = url.split('&')
-        proto_pkt = Http_tracker_request()
+        proto_pkt = Http_Tracker_Request(packet_info)
         for field in fields:
             field_data = field.split('=')
             field_key = field_data[0]
             field_value = field_data[1]
             proto_pkt.add_field(field_key, field_value)
             # print(field_key + ':' + field_value)
+
+        self.statistic.add_http_tracker(proto_pkt, 'request')
+        self.show_text.append(str(proto_pkt))
 
     def http_tracker_response(self, data, packet_info):
         '''
@@ -235,9 +238,11 @@ class Protocol_Restore:
         :param packet_info:
         :return:
         '''
-        proto_pkt = Http_Tracker_Response()
-        proto_pkt.data(data)
+        proto_pkt = Http_Tracker_Response(packet_info)
+        proto_pkt.set_data(data)
 
+        self.statistic.add_http_tracker(proto_pkt,'response')
+        self.show_text.append(str(proto_pkt))
         return True
 
     def peer_handshake(self, payload, packet_info):

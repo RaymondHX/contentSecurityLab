@@ -5,7 +5,8 @@ class Http_Tracker_Request:
 
     '''
 
-    def __init__(self):
+    def __init__(self, packet_info):
+        self.packet_info = packet_info
         self.request_field = {}
 
 
@@ -13,4 +14,7 @@ class Http_Tracker_Request:
         self.request_field[field_key] = field_value
 
     def __str__(self):
-        pass
+        show_str = 'http tracker announce request protocol:\n%s\n' % (str(self.packet_info))
+        for k, v in self.request_field.items():
+            show_str += '\t%s:%s\n' %(k, v)
+        return show_str
