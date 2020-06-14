@@ -49,13 +49,6 @@ class Feature_Recognition:
                 return
 
 
-    def http_recognition(self):
-        '''
-        对http数据包进行特征识别
-        目前没有协议
-        :return:
-        '''
-        pass
 
 
     def udp_tracker_request_rec(self, payload, packet_info):

@@ -58,7 +58,7 @@
        </column>
        <column>
         <property name="text">
-         <string>type</string>
+         <string>port</string>
         </property>
        </column>
        <column>
@@ -417,7 +417,7 @@ font: 9pt &quot;微软雅黑&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>1099</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

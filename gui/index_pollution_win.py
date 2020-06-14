@@ -88,4 +88,5 @@ class IndexPollutionWindow(QDialog):
         tracker_port = int(tracker_port_str)
 
         # 下面开始进行污染
-        send_pollution().send_http_announce(tracker_ip, tracker_port, min_ip, max_ip, pollute_port, self.ui.pollution_info_l)
+        self.send_pollution1 = send_pollution(tracker_ip, tracker_port, min_ip, max_ip, pollute_port, self.ui.pollution_info_l)
+        self.send_pollution1.start()
